@@ -90,7 +90,7 @@ export default function Home() {
         <h2 className="text-4xl text-center text-balance font-semibold mb-8 ">
           Pricing software which pays for itself 20x over
         </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 max-w-screen-xl mx-auto gap-4 ">
+        <div className="grid grid-cols-1 lg:grid-cols-4 max-w-screen-xl mx-auto gap-4 ">
           {subscriptionTiersInOrder.map((tier) => (
             <PricingCards key={tier.name} {...tier} />
           ))}

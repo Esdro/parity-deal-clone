@@ -5,13 +5,13 @@ import Link from 'next/link';
 
 function DashboardNavBar() {
     return (
-        <header className='flex gap-8 shadow-md container py-6 px-6 items-center bg-background '>
+        <header className='flex gap-8 shadow-md py-6 px-6 items-center bg-background '>
             <Link className='mr-auto' href={"/dashboard"}>
                 <BrandLogo/>
             </Link>
             <Link href="/dashboard/products"> Products  </Link>
             <Link href="/dashboard/discounts"> Analytics  </Link>
-            <Link href="/dashboard/suscriptions"> Suscribtions  </Link>
+            <Link href="/dashboard/subscriptions"> Subscriptions  </Link>
             <UserButton/>
         </header>
     );

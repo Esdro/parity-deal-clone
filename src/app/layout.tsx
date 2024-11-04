@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import {Fredoka} from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import {Toaster} from "@/components/ui/toaster";
+import React, {ReactNode} from "react";
 
 const googleFredoka = Fredoka( {
   subsets: ["latin"],
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <ClerkProvider>
@@ -27,6 +29,7 @@ export default function RootLayout({
         className={`${googleFredoka.className} antialiased bg-background  `}
       >
         {children}
+      <Toaster />
       </body>
     </html>
     </ClerkProvider>

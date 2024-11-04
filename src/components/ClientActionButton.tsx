@@ -16,7 +16,7 @@ type ClientActionButtonProps = {
  * @param {() => Promise<void>} param0.action
  * @returns {*}
  */
-function ClientActionButton({text, action}: ClientActionButtonProps) {
+function ClientActionButton({text, action}: ClientActionButtonProps): JSX.Element {
     return (
         <Button variant={'accent'} onClick={action}>
             {text}

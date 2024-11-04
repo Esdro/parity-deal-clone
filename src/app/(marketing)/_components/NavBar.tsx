@@ -1,6 +1,6 @@
 import BrandLogo from "@/components/BrandLogo";
 import { Button } from "@/components/ui/button";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 
@@ -20,6 +20,7 @@ function NavBar() {
         <Link href={"/#about"} className="text-lg">
           About
         </Link>
+           {/* <UserButton/> */}
         <span className="text-lg">
 
            <SignedIn>
