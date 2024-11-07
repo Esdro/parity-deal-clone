@@ -16,11 +16,9 @@ import {
 } from "@/components/ui/card";
 import { formatCompactNumber } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
-// import ClientActionButton from "@/components/ClientActionButton";
-// import { InvokeTwitter } from "@/lib/twitter-caller";
 import BrandLogo from "@/components/BrandLogo";
 
-export default function Home() {
+function Home() {
   return (
     <>
       <section className="min-h-screen bg-[radial-gradient(hsl(0,72%,65%,40%),hsl(24,62%,73%,40%),hsl(var(--background))_60%)] flex items-center justify-center text-center text-balance flex-col gap-8 px-4">
@@ -153,7 +151,7 @@ export function PricingCards({
   priceInCents,
   maxNumberOfProducts,
   maxNumberOfVisits,
-}: (typeof subscriptionTiersInOrder)[number]) {
+}: (typeof subscriptionTiersInOrder)[number]): JSX.Element {
   const isMostPopular = name == "Standard";
   return (
     <Card>
@@ -227,3 +225,5 @@ export function FooterLinkGroup({ label, links }: FooterLinkGroupProps) {
     </div>
   );
 }
+
+export default Home;
