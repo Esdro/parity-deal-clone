@@ -6,7 +6,7 @@ import { CountryGroupsDiscountSchema} from "@/schemas/countryGroups";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
 import {useToast} from "@/hooks/use-toast";
@@ -103,7 +103,6 @@ export default function CountryGroupsDiscountForm({productId, countryGroups}: Co
                                                 <FormControl>
                                                     <Input
                                                         type='number'
-                                                        value={field.value ?? ""}
                                                         {...field}
                                                         onChange={e => field.onChange(e.target.valueAsNumber ?? "")}
                                                         min={"0"}
