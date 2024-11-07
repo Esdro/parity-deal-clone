@@ -20,7 +20,7 @@ export async function createProduct(values: z.infer<typeof ProductFormSchema>): 
     message: string
 } | undefined> {
     const {data, success} = ProductFormSchema.safeParse(values);
-    // @ts-expect-error
+
     const {userId} = await auth();
 
     if (!success || !userId) {
