@@ -7,25 +7,30 @@ import {Form, FormField, FormLabel, FormControl, FormItem, FormDescription, Form
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import {createProduct} from "@/server/actions/product";
+import {createProduct, updateOneProduct} from "@/server/actions/product";
 import {ProductFormSchema, ProductFormValues} from "@/schemas/products";
 import {useToast} from "@/hooks/use-toast";
+import {ProductTable} from "@/drizzle/schema";
 
 
-function AddProductForm() {
+function AddProductForm({product}: { product?: typeof ProductTable.$inferInsert }) {
 
-    const form =  useForm<z.infer<typeof ProductFormSchema>>({
+    const form = useForm<z.infer<typeof ProductFormSchema>>({
         resolver: zodResolver(ProductFormSchema),
         mode: "onSubmit",
-        defaultValues: ProductFormValues
+        defaultValues: product ? {
+            ...product,
+            description: product.description ?? ""
+        } : ProductFormValues
     })
 
-    const { toast } = useToast();
+    const {toast} = useToast();
 
-    async function OnSubmitFormHandler(values : z.infer<typeof ProductFormSchema> ) {
+    async function OnSubmitFormHandler(values: z.infer<typeof ProductFormSchema>) {
 
+        const action = product ? updateOneProduct.bind(null, product.id as string) : createProduct;
         // console.log(data)
-      const data = await createProduct(values);
+        const data = await action(values);
 
         if (data?.message) {
             toast({
@@ -35,9 +40,9 @@ function AddProductForm() {
             })
         }
 
-        form.reset(ProductFormValues);
-
-
+        if (!product && !data?.error) {
+            form.reset(ProductFormValues);
+        }
     }
 
     return (
@@ -54,7 +59,7 @@ function AddProductForm() {
                                     <FormControl>
                                         <Input className='border-l-input' {...field} />
                                     </FormControl>
-                                    <FormDescription> Enter the name of your Product  </FormDescription>
+                                    <FormDescription> Enter the name of your Product </FormDescription>
                                     <FormMessage/>
                                 </FormItem>
                             )}
@@ -68,7 +73,8 @@ function AddProductForm() {
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
-                                    <FormDescription className='font-semibold'> Make sure to type here the url of your product page.  </FormDescription>
+                                    <FormDescription className='font-semibold'> Make sure to type here the url of your
+                                        product page. </FormDescription>
                                     <FormMessage/>
                                 </FormItem>
                             )}
@@ -82,7 +88,7 @@ function AddProductForm() {
                                 <FormItem>
                                     <FormLabel className='font-bold'> Description </FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} className='resize-none min-h-20 ' />
+                                        <Textarea {...field} className='resize-none min-h-20 '/>
                                     </FormControl>
                                     <FormDescription> Describe your product here. </FormDescription>
                                     <FormMessage/>
@@ -91,7 +97,7 @@ function AddProductForm() {
                         />
                     </div>
                     <div className='flex justify-end'>
-                        <Button type='submit' className='w-full sm:w-auto sm: ' variant='accent'> Add Product </Button>
+                        <Button type='submit' className='w-full sm:w-auto sm: ' variant={product? "default" : "accent"}> {product ? "Update product" : "Add Product"} </Button>
                     </div>
                 </form>
             </Form>

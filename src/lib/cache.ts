@@ -4,7 +4,9 @@ import {cache} from "react";
 export const CACHE_TAGS = {
     products: "products",
     productViews: "productViews",
-    subscription: "subscription"
+    subscription: "subscription",
+    countries: "countries",
+    countryGroups: "countryGroups",
 
 } as const;
 

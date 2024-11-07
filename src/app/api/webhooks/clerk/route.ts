@@ -5,6 +5,7 @@ import { env } from "@/data/env/server"
 import {
     createUserSubscription,
 } from "@/server/db/subscription"
+import {deleteUser} from "@/server/db/users";
 
 
 // const stripe = new Stripe(env.STRIPE_SECRET_KEY)
@@ -48,17 +49,17 @@ export async function POST(req: Request) {
             })
             break
         }
-        /*case "user.deleted": {
+        case "user.deleted": {
             if (event.data.id != null) {
-                const userSubscription = await getUserSubscription(event.data.id)
-                if (userSubscription?.stripeSubscriptionId != null) {
-                    await stripe.subscriptions.cancel(
-                        userSubscription?.stripeSubscriptionId
-                    )
-                }
+                // const userSubscription = await getUserSubscription(event.data.id)
+                // if (userSubscription?.stripeSubscriptionId != null) {
+                //     await stripe.subscriptions.cancel(
+                //         userSubscription?.stripeSubscriptionId
+                //     )
+                // }
                 await deleteUser(event.data.id)
             }
-        }*/
+        }
     }
 
     return new Response("", { status: 200 })
