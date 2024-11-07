@@ -54,13 +54,13 @@ export default function CountryGroupsDiscountForm({productId, countryGroups}: Co
     const submitHandler = async (values: z.infer<typeof CountryGroupsDiscountSchema>) => {
 
 
-        const data = await updateCountryGroups(values, productId);
+        const {error, message} = await updateCountryGroups(values, productId);
 
-        if (data?.message) {
+        if (message) {
             toast({
-                title: data.error ? "Error" : "Success",
-                description: data.message,
-                variant: data.error ? "destructive" : "default",
+                title: error ? "Error" : "Success",
+                description: message,
+                variant: error ? "destructive" : "default",
             })
         }
 

@@ -111,8 +111,7 @@ export async function CountryTabsContent({productId, userId}: { productId: strin
                     <InfoIcon className='size-6 text-red-600 '/>
                     <div>
                         <AlertTitle>Country Groups Discount</AlertTitle>
-                        <AlertDescription> Leave the discount field blank if you do not want to display deals for specific
-                            parity group </AlertDescription>
+                        <AlertDescription> Leave the discount field blank if you do not want to display deals for specific parity group </AlertDescription>
                     </div>
                 </Alert>
             </CardHeader>
