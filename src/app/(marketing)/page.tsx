@@ -17,6 +17,8 @@ import {
 import { formatCompactNumber } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
 import BrandLogo from "@/components/BrandLogo";
+import {PricingCards} from "@/components/PricingCards";
+import {FooterLinkGroup} from "@/components/FooterLinkGroup";
 
 function Home() {
   return (
@@ -143,87 +145,6 @@ function Home() {
   );
 }
 
-export function PricingCards({
-  name,
-  canAccessAnalytics,
-  canCustomizeBanner,
-  canRemoveBranding,
-  priceInCents,
-  maxNumberOfProducts,
-  maxNumberOfVisits,
-}: (typeof subscriptionTiersInOrder)[number]): JSX.Element {
-  const isMostPopular = name == "Standard";
-  return (
-    <Card>
-      <CardHeader>
-        <div className="text-accent mb-8 font-semibold"> {name} </div>
-        <CardTitle className="text-xl font-bold">
-          {" "}
-          ${priceInCents / 100} /mo{" "}
-        </CardTitle>
-        <CardDescription>
-          <span className="font-bold">
-            {" "}
-            {formatCompactNumber(maxNumberOfVisits)}{" "}
-          </span>{" "}
-          pricing page visits/mo
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <SignUpButton>
-          <Button
-            className="text-lg w-full rounded-lg"
-            variant={isMostPopular ? "accent" : "default"}
-          >
-            {" "}
-            Get started{" "}
-          </Button>
-        </SignUpButton>
-      </CardContent>
-      <CardFooter className="flex flex-col gap-4 items-start ">
-        <Feature classname="font-bold">
-          {maxNumberOfProducts}{" "}
-          {maxNumberOfProducts === 1 ? "product" : "products"}
-        </Feature>
-        <Feature>PPP Discounts</Feature>
-        {canAccessAnalytics && <Feature> Advanced Analytics </Feature>}
-        {canRemoveBranding && <Feature> Remove Custom PPP branding </Feature>}
-        {canCustomizeBanner && <Feature> Banner Customization </Feature>}
-      </CardFooter>
-    </Card>
-  );
-}
 
-function Feature({
-  children,
-  classname,
-}: {
-  children: ReactNode;
-  classname?: string;
-}) {
-  return (
-    <div className={cn("flex items-center items-center gap-2", classname)}>
-      <CheckIcon className="size-4 stroke-accent bg-accent/25 rounded-full p-0.5" />
-      <span> {children} </span>
-    </div>
-  );
-}
-type FooterLinkGroupProps = {
-  label: string;
-  links: { label: string; href: string }[];
-};
-
-export function FooterLinkGroup({ label, links }: FooterLinkGroupProps) {
-  return (
-    <div className="flex flex-col gap-4 ">
-      <h3 className="text-xl font-bold"> {label} </h3>
-      <ul className="flex flex-col gap-2 text-md">
-        {links.map(({ label, href }) => (
-          <Link key={label} href={href}> {label} </Link>
-        ))}
-      </ul>
-    </div>
-  );
-}
 
 export default Home;
