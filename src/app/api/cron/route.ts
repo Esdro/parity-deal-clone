@@ -9,5 +9,9 @@ export async function GET(req:NextRequest) {
             status: 401,
         })
     }
-    return clearFullCache();
+    clearFullCache();
+
+    return new Response("Cache cleared", {
+        status: 200,
+    })
 }
