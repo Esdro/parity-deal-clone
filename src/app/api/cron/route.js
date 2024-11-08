@@ -1,4 +1,4 @@
-import {clearFullCache} from "../../../lib/cache.js";
+import {clearFullCache} from "@/lib/cache";
 
 export async function GET() {
     return clearFullCache();

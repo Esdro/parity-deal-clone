@@ -1,7 +1,7 @@
 import {CountryGroupDiscountTable, ProductCustomizationTable, ProductTable} from "@/drizzle/schema";
 import {db} from "@/drizzle/db";
 import {and, eq, inArray, sql} from "drizzle-orm";
-import {CACHE_TAGS, clearFullCache, dbCache, getGlobalTag, getIdTag, getUserTag, revalidateDbCache} from "@/lib/cache";
+import {CACHE_TAGS, dbCache, getGlobalTag, getIdTag, getUserTag, revalidateDbCache} from "@/lib/cache";
 import {notFound} from "next/navigation";
 import {BatchItem} from "drizzle-orm/batch";
 
