@@ -7,8 +7,7 @@ import {
     deleteProduct,
     getOneProduct,
     updateProduct,
-    updateCountryGroupsDiscountFromDB, updateProductCustomization, refreshDB
-} from "@/server/db/products";
+    updateCountryGroupsDiscountFromDB, updateProductCustomization} from "@/server/db/products";
 import {CountryGroupsDiscountSchema} from "@/schemas/countryGroups";
 import {productCustomizationSchema} from "@/schemas/productCustomization";
 import {canCustomizeBanner} from "@/server/permissions";
