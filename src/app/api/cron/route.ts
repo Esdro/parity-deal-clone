@@ -11,7 +11,7 @@ export async function GET(req:NextRequest) {
     }
     clearFullCache();
 
-    return new Response("Cache cleared", {
+    return new Response("Cache cleared successfully", {
         status: 200,
     })
 }
