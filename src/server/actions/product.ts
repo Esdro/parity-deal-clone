@@ -2,13 +2,12 @@
 import {z} from "zod";
 import {ProductFormSchema} from "@/schemas/products";
 import {auth} from "@clerk/nextjs/server";
-import {redirect} from "next/navigation";
 import {
     addProduct,
     deleteProduct,
     getOneProduct,
     updateProduct,
-    updateCountryGroupsDiscountFromDB, updateProductCustomization
+    updateCountryGroupsDiscountFromDB, updateProductCustomization, refreshDB
 } from "@/server/db/products";
 import {CountryGroupsDiscountSchema} from "@/schemas/countryGroups";
 import {productCustomizationSchema} from "@/schemas/productCustomization";
@@ -59,7 +58,7 @@ export async function deleteOneProduct(productId: string, userId: string) {
 }
 
 export async function getProductById(productId: string, userId: string) {
-    return (await getOneProduct(productId, userId));
+    return  await getOneProduct(productId, userId)
 }
 
 
@@ -109,7 +108,7 @@ export async function updateCountryGroups(unsafeData: z.infer<typeof CountryGrou
 }
 
 
-export async function updateProductCustomizationFromDB( productId: string, values: z.infer<typeof productCustomizationSchema>) {
+export async function updateProductCustomizationFromDB(productId: string, values: z.infer<typeof productCustomizationSchema>) {
 
     const {userId} = await auth();
 

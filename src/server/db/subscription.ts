@@ -2,7 +2,7 @@ import { subscriptionTiers } from "@/data/subscriptionTiers"
 import { db } from "@/drizzle/db"
 import { UserSubscriptionTable } from "@/drizzle/schema"
 import { CACHE_TAGS, dbCache, getUserTag, revalidateDbCache } from "@/lib/cache"
-import {eq, SQL} from "drizzle-orm"
+import {eq} from "drizzle-orm"
 
 export async function createUserSubscription(
     data: typeof UserSubscriptionTable.$inferInsert

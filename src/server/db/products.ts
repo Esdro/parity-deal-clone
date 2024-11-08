@@ -1,7 +1,7 @@
 import {CountryGroupDiscountTable, ProductCustomizationTable, ProductTable} from "@/drizzle/schema";
 import {db} from "@/drizzle/db";
 import {and, eq, inArray, sql} from "drizzle-orm";
-import {CACHE_TAGS, dbCache, getGlobalTag, getIdTag, getUserTag, revalidateDbCache} from "@/lib/cache";
+import {CACHE_TAGS, clearFullCache, dbCache, getGlobalTag, getIdTag, getUserTag, revalidateDbCache} from "@/lib/cache";
 import {notFound} from "next/navigation";
 import {BatchItem} from "drizzle-orm/batch";
 
@@ -62,6 +62,8 @@ export async function deleteProduct(productId: string, userId: string) {
  * @param userId -- the user id of the product owner
  */
 export async function getOneProduct(productId: string, userId: string) {
+
+   // clearFullCache();
 
     const cacheFn = dbCache(getOneProductInternal, {
         tags: [getIdTag(CACHE_TAGS.products, productId)]
@@ -175,25 +177,6 @@ export async function getProductCountryGroupsInternal({productId, userId}: { pro
 
 }
 
-
-/*export async function updateCountryGroupsDiscountFromDB(
-    insertedGroup: (typeof CountryGroupDiscountTable.$inferInsert)[] | undefined,
-    deletedGroup: { countryGroupId: string }[],
-    {productId, userId}: { productId: string; userId: string }
-) {
-
-    const cacheFn = dbCache(updateCountryGroupsDiscountFromDBInternal, {
-        tags: [
-            getIdTag(CACHE_TAGS.products, productId,),
-            getUserTag(CACHE_TAGS.products, userId),
-            getGlobalTag(CACHE_TAGS.countries),
-            getGlobalTag(CACHE_TAGS.countryGroups),
-        ],
-    })
-
-    return cacheFn(insertedGroup, deletedGroup, {productId, userId})
-
-}*/
 
 
 /**
