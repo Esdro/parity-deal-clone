@@ -15,20 +15,20 @@ export async function createStripeCheckoutSession(tier: PaidTierNames) {
     const user = await currentUser();
 
     if (!user) {
-        return {error: true}
+        return;
     }
 
     const subscription = await getUserSubscription(user.id);
 
     if (!subscription) {
-        return {error: true}
+        return;
     }
 
     if (subscription.stripeCustomerId == null) {
         const url = await getCheckoutSessionUrl(tier, user);
 
         if (!url) {
-            return {error: true}
+            return;
         }
         redirect(url);
     } else {
@@ -36,7 +36,7 @@ export async function createStripeCheckoutSession(tier: PaidTierNames) {
         const url = await getSubscriptionUpgradeSessionUrl(tier, subscription);
 
         if (!url) {
-            return {error: true}
+            return;
         }
 
         redirect(url);
@@ -52,16 +52,16 @@ export async function createCancelSubscription() {
     const user = await currentUser();
 
     if (!user) {
-        return {error: true}
+        return;
     }
     const subscription = await getUserSubscription(user.id);
 
     if (!subscription) {
-        return {error: true}
+        return;
     }
 
     if (subscription.stripeSubscriptionId == null || subscription.stripeCustomerId == null) {
-        return {error: true}
+        return;
     }
 
     const portalSession = await stripe.billingPortal.sessions.create({
@@ -86,19 +86,19 @@ export async function createCustomerPortalSession() {
     const {userId} = await auth();
 
     if (!userId) {
-        return {error: true}
+        return;
     }
 
     const subscription = await getUserSubscription(userId);
 
 
     if (!subscription) {
-        return {error: true}
+        return;
     }
 
     if (subscription.stripeCustomerId == null) {
         console.log("User does not have a stripe customer id")
-        return {error: true}
+        return;
     }
 
     const portalSession = await stripe.billingPortal.sessions.create({
