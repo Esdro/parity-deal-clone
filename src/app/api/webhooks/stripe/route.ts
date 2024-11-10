@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
 }
 
-export async function handleCreate(subscription: Stripe.Subscription) {
+ async function handleCreate(subscription: Stripe.Subscription) {
 
     const tier = getTierByPriceId(subscription.items.data[0].price.id);
     const clerkUserId= subscription.metadata.clerkUserId
@@ -63,7 +63,7 @@ export async function handleCreate(subscription: Stripe.Subscription) {
 
 }
 
-export async function handleUpdate(subscription: Stripe.Subscription) {
+ async function handleUpdate(subscription: Stripe.Subscription) {
 
     const tier = getTierByPriceId(subscription.items.data[0].price.id);
 
@@ -80,7 +80,7 @@ export async function handleUpdate(subscription: Stripe.Subscription) {
     })
 }
 
-export async function handleDelete(subscription: Stripe.Subscription) {
+async function handleDelete(subscription: Stripe.Subscription) {
 
     const customer = subscription.customer
 
