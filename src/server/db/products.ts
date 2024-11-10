@@ -1,11 +1,11 @@
-import {CountryGroupDiscountTable, ProductCustomizationTable, ProductTable} from "@/drizzle/schema";
-import {db} from "@/drizzle/db";
-import {and, eq, inArray, sql} from "drizzle-orm";
-import {CACHE_TAGS, dbCache, getGlobalTag, getIdTag, getUserTag, revalidateDbCache} from "@/lib/cache";
-import {notFound} from "next/navigation";
-import {BatchItem} from "drizzle-orm/batch";
+import { CountryGroupDiscountTable, ProductCustomizationTable, ProductTable } from "@/drizzle/schema";
+import { db } from "@/drizzle/db";
+import { and, count, eq, inArray, sql } from "drizzle-orm";
+import { CACHE_TAGS, dbCache, getGlobalTag, getIdTag, getUserTag, revalidateDbCache } from "@/lib/cache";
+import { notFound } from "next/navigation";
+import { BatchItem } from "drizzle-orm/batch";
 
-import {CountryGroupsDiscountSchema} from "@/schemas/countryGroups";
+import { CountryGroupsDiscountSchema } from "@/schemas/countryGroups";
 
 
 export async function addProduct(data: typeof ProductTable.$inferInsert) {
@@ -34,7 +34,7 @@ export async function addProduct(data: typeof ProductTable.$inferInsert) {
 
 export async function deleteProduct(productId: string, userId: string) {
 
-    const {rowCount} = await db.delete(ProductTable).where(and(eq(ProductTable.id, productId), eq(ProductTable.clerkUserId, userId)))
+    const { rowCount } = await db.delete(ProductTable).where(and(eq(ProductTable.id, productId), eq(ProductTable.clerkUserId, userId)))
 
     if (rowCount > 0) {
         revalidateDbCache({
@@ -63,28 +63,37 @@ export async function deleteProduct(productId: string, userId: string) {
  */
 export async function getOneProduct(productId: string, userId: string) {
 
-   // clearFullCache();
+    // clearFullCache();
 
     const cacheFn = dbCache(getOneProductInternal, {
         tags: [getIdTag(CACHE_TAGS.products, productId)]
     })
-    return cacheFn({userId, productId})
+    return cacheFn({ userId, productId })
+
+}
+
+export async function countAllUserProducts(userId: string) {
+
+    const cacheFn = dbCache(countAllUserProductsInternal, {
+        tags: [getUserTag(CACHE_TAGS.products, userId)]
+    })
+    return cacheFn(userId)
 
 }
 
 
-export async function getAllProductsFromUser(userId: string, {limit}: { limit?: number }) {
+export async function getAllProductsFromUser(userId: string, { limit }: { limit?: number }) {
     const cacheFn = dbCache(getAllProductsFromUserInternal, {
         tags: [getUserTag(CACHE_TAGS.products, userId)]
     })
-    return cacheFn(userId, {limit})
+    return cacheFn(userId, { limit })
 }
 
-export async function updateProduct(data: Partial<typeof ProductTable.$inferInsert>, {productId, userId}: {
+export async function updateProduct(data: Partial<typeof ProductTable.$inferInsert>, { productId, userId }: {
     productId: string,
     userId: string
 }) {
-    const {rowCount} = await db.update(ProductTable).set(data).where(and(eq(ProductTable.id, productId), eq(ProductTable.clerkUserId, userId)))
+    const { rowCount } = await db.update(ProductTable).set(data).where(and(eq(ProductTable.id, productId), eq(ProductTable.clerkUserId, userId)))
 
     if (rowCount > 0) {
         revalidateDbCache({
@@ -105,9 +114,9 @@ export async function updateProduct(data: Partial<typeof ProductTable.$inferInse
 }
 
 
-async function getOneProductInternal({userId, productId}: { userId: string, productId: string }) {
+async function getOneProductInternal({ userId, productId }: { userId: string, productId: string }) {
     const results = await db.query.ProductTable.findFirst({
-        where: ({id, clerkUserId}, {and, eq}) => and(eq(id, productId), eq(clerkUserId, userId)),
+        where: ({ id, clerkUserId }, { and, eq }) => and(eq(id, productId), eq(clerkUserId, userId)),
     })
     if (results != null) {
         return results
@@ -116,16 +125,22 @@ async function getOneProductInternal({userId, productId}: { userId: string, prod
     }
 }
 
-export function getAllProductsFromUserInternal(userId: string, {limit}: { limit?: number }) {
+export function getAllProductsFromUserInternal(userId: string, { limit }: { limit?: number }) {
     return db.query.ProductTable.findMany({
-        where: ({clerkUserId}, {eq}) => eq(clerkUserId, userId),
-        orderBy: ({createdAt}, {desc}) => desc(createdAt),
+        where: ({ clerkUserId }, { eq }) => eq(clerkUserId, userId),
+        orderBy: ({ createdAt }, { desc }) => desc(createdAt),
         limit
     })
 }
 
+export async function countAllUserProductsInternal(userId: string) {
+    const data = await db.select({ productCount: count() }).from(ProductTable).where(eq(ProductTable.clerkUserId, userId));
 
-export function getProductCountryGroups({productId, userId,}: { productId: string; userId: string }) {
+    return data[0].productCount ?? 0;
+}
+
+
+export function getProductCountryGroups({ productId, userId, }: { productId: string; userId: string }) {
     const cacheFn = dbCache(getProductCountryGroupsInternal, {
         tags: [
             getIdTag(CACHE_TAGS.products, productId,),
@@ -134,11 +149,11 @@ export function getProductCountryGroups({productId, userId,}: { productId: strin
         ],
     })
 
-    return cacheFn({productId, userId})
+    return cacheFn({ productId, userId })
 }
 
 
-export async function getProductCountryGroupsInternal({productId, userId}: { productId: string, userId: string }) {
+export async function getProductCountryGroupsInternal({ productId, userId }: { productId: string, userId: string }) {
 
     const product = await getOneProduct(productId, userId);
 
@@ -157,7 +172,7 @@ export async function getProductCountryGroupsInternal({productId, userId}: { pro
                     coupon: true,
                     discountPercentage: true,
                 },
-                where: ({productId: id}, {eq}) => eq(id, productId),
+                where: ({ productId: id }, { eq }) => eq(id, productId),
                 limit: 1,
             },
         },
@@ -190,7 +205,7 @@ export async function getProductCountryGroupsInternal({productId, userId}: { pro
 export async function updateCountryGroupsDiscountFromDB(
     insertedGroup: (typeof CountryGroupDiscountTable.$inferInsert)[] | undefined,
     deletedGroup: { countryGroupId: string }[],
-    {productId, userId}: { productId: string; userId: string }) {
+    { productId, userId }: { productId: string; userId: string }) {
 
     const product = await getOneProduct(productId, userId);
 
@@ -201,7 +216,7 @@ export async function updateCountryGroupsDiscountFromDB(
     if (deletedGroup.length > 0) {
         statements.push(db.delete(CountryGroupDiscountTable).where(and(
             eq(CountryGroupDiscountTable.productId, productId),
-            inArray(CountryGroupDiscountTable.countryGroupId, deletedGroup.map(({countryGroupId}) => countryGroupId))
+            inArray(CountryGroupDiscountTable.countryGroupId, deletedGroup.map(({ countryGroupId }) => countryGroupId))
         )))
     }
 
@@ -234,7 +249,7 @@ export async function updateCountryGroupsDiscountFromDB(
 
 }
 
-export async function getProductCustomization({productId, userId}: { productId: string, userId: string }) {
+export async function getProductCustomization({ productId, userId }: { productId: string, userId: string }) {
 
     const cacheFn = dbCache(getProductCustomizationInternal, {
         tags: [
@@ -242,19 +257,19 @@ export async function getProductCustomization({productId, userId}: { productId: 
         ],
     })
 
-    return cacheFn({productId, userId})
+    return cacheFn({ productId, userId })
 
 }
 
-async function getProductCustomizationInternal({productId, userId}: { productId: string, userId: string }) {
+async function getProductCustomizationInternal({ productId, userId }: { productId: string, userId: string }) {
 
     const product = await getOneProduct(productId, userId);
 
     if (!product) return null;
 
     const data = await db.query.ProductTable.findFirst({
-        where: ({id, clerkUserId}, {eq, and}) => and(eq(id, productId), eq(clerkUserId, userId)),
-        with: {productCustomization: true}
+        where: ({ id, clerkUserId }, { eq, and }) => and(eq(id, productId), eq(clerkUserId, userId)),
+        with: { productCustomization: true }
     })
 
 
@@ -263,10 +278,10 @@ async function getProductCustomizationInternal({productId, userId}: { productId:
 }
 
 
-export async function updateProductCustomization(data: Partial<typeof ProductCustomizationTable.$inferInsert>, {productId}: {
+export async function updateProductCustomization(data: Partial<typeof ProductCustomizationTable.$inferInsert>, { productId }: {
     productId: string
 }) {
-    const {rowCount} = await db.update(ProductCustomizationTable).set(data).where(eq(ProductCustomizationTable.productId, productId))
+    const { rowCount } = await db.update(ProductCustomizationTable).set(data).where(eq(ProductCustomizationTable.productId, productId))
 
     if (rowCount > 0) {
         revalidateDbCache({

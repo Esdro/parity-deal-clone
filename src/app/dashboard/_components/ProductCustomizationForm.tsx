@@ -9,7 +9,7 @@ import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Switch} from "@/components/ui/switch";
 import {Button} from "@/components/ui/button";
-import {AccessNotPermitted} from "@/components/AccessDeniedComponent";
+import {AccessDenied} from "@/components/AccessDenied";
 import {Banner} from "@/components/Banner";
 import {updateProductCustomizationFromDB} from "@/server/actions/product";
 import {useToast} from "@/hooks/use-toast";
@@ -61,6 +61,9 @@ export default function ProductCustomizationForm({canCustomizeBanner, customizat
 
     return (
         <>
+            {!canCustomizeBanner && (
+                <AccessDenied fallbackMessage={ " You can not save all your customizations on the banner until you upgraded your account.  " } />
+            ) }
 
             <Banner
                 customization={formValues}
@@ -72,8 +75,6 @@ export default function ProductCustomizationForm({canCustomizeBanner, customizat
                 message={formValues.locationMessage?? ""}
                 canRemoveBranding={canRemoveBranding}
             />
-
-            {!canCustomizeBanner && <AccessNotPermitted accessName={ " Banner Customization " } />}
 
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(handleSubmit)}>

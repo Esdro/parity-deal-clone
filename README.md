@@ -1,3 +1,8 @@
+
+
+Project developed by [Esdro](https://github.com/Esdro)
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -13,6 +18,12 @@ pnpm dev
 # or
 bun dev
 ```
+
+Do not forget to create a `.env` file with the content presented in `.env.example` file.
+
+
+
+```bash
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

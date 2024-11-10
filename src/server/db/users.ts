@@ -1,5 +1,5 @@
 import {db} from "@/drizzle/db";
-import {ProductTable, UserSubscriptionTable} from "@/drizzle/schema";
+import {ProductCustomizationTable, ProductTable, UserSubscriptionTable} from "@/drizzle/schema";
 import {eq} from "drizzle-orm";
 import {CACHE_TAGS, revalidateDbCache} from "@/lib/cache";
 
@@ -11,6 +11,9 @@ export async function deleteUser(userId: string) {
     ])
 
     products.forEach((prod: {id: string}) => {
+
+        db.delete(ProductCustomizationTable).where(eq(ProductCustomizationTable.productId, prod.id))
+
         revalidateDbCache({
             tag: CACHE_TAGS.products,
             id: prod.id,

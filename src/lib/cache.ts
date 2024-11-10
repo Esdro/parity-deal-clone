@@ -27,6 +27,8 @@ export type ValidTags = ReturnType<typeof getGlobalTag> | ReturnType<typeof getU
 export function clearFullCache() {
     revalidateTag("*")
 }
+
+
 export function dbCache<T extends (...args: any[]) => Promise<any>>(
     cb: Parameters<typeof unstable_cache<T>>[0],
     {tags}: {tags: ValidTags[]}

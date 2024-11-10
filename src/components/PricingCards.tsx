@@ -7,14 +7,22 @@ import Feature from "@/components/Feature";
 
 export type PricingCardProps = {
     name: string,
-    canAccessAnalytics : boolean,
-    canCustomizeBanner : boolean,
-    canRemoveBranding : boolean,
+    canAccessAnalytics: boolean,
+    canCustomizeBanner: boolean,
+    canRemoveBranding: boolean,
     priceInCents: number,
     maxNumberOfProducts: number,
     maxNumberOfVisits: number,
 }
-export function PricingCards({name, canAccessAnalytics, canCustomizeBanner, canRemoveBranding, priceInCents, maxNumberOfProducts, maxNumberOfVisits,
+
+export function PricingCards({
+                                 name,
+                                 canAccessAnalytics,
+                                 canCustomizeBanner,
+                                 canRemoveBranding,
+                                 priceInCents,
+                                 maxNumberOfProducts,
+                                 maxNumberOfVisits,
                              }: PricingCardProps) {
     const isMostPopular = name == "Standard";
     return (
@@ -30,10 +38,11 @@ export function PricingCards({name, canAccessAnalytics, canCustomizeBanner, canR
             {" "}
               {formatCompactNumber(maxNumberOfVisits)}{" "}
           </span>{" "}
-                    pricing page visits/mo
+                    pricing page visits/month
                 </CardDescription>
             </CardHeader>
             <CardContent>
+
                 <SignUpButton>
                     <Button
                         className="text-lg w-full rounded-lg"
@@ -43,6 +52,7 @@ export function PricingCards({name, canAccessAnalytics, canCustomizeBanner, canR
                         Get started{" "}
                     </Button>
                 </SignUpButton>
+
             </CardContent>
             <CardFooter className="flex flex-col gap-4 items-start ">
                 <Feature classname="font-bold">

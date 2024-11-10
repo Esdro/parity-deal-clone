@@ -10,7 +10,7 @@ import {
     updateCountryGroupsDiscountFromDB, updateProductCustomization} from "@/server/db/products";
 import {CountryGroupsDiscountSchema} from "@/schemas/countryGroups";
 import {productCustomizationSchema} from "@/schemas/productCustomization";
-import {canCustomizeBanner} from "@/server/permissions";
+import {canCreateProduct, canCustomizeBanner} from "@/server/permissions";
 
 
 export async function createProduct(values: z.infer<typeof ProductFormSchema>): Promise<{
@@ -21,7 +21,9 @@ export async function createProduct(values: z.infer<typeof ProductFormSchema>): 
 
     const {userId} = await auth();
 
-    if (!success || !userId) {
+    const canCreate = await canCreateProduct(userId as string);
+
+    if (!success || userId == null || !canCreate) {
         return {error: true, message: "There was an error creating your product"};
     }
 

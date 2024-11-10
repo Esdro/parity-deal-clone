@@ -1,19 +1,23 @@
 import React from 'react';
-import NoProduct from './_components/NoProduct';
+import {auth} from "@clerk/nextjs/server";
 import {getAllProductsFromUser} from "@/server/db/products";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import ProductGridList from "@/app/dashboard/_components/ProductCardList";
 import {PlusIcon} from "@radix-ui/react-icons";
-import {auth} from "@clerk/nextjs/server";
-import {ArrowRightIcon} from "lucide-react";
+import ProductGridList from "@/app/dashboard/_components/ProductCardList";
+import NoProduct from "@/app/dashboard/_components/NoProduct";
 
-
-async function DashboardPage() {
+async function Page() {
     const {userId, redirectToSignIn} = await auth();
-    if (!userId) return  redirectToSignIn();
 
-    const allProducts = await getAllProductsFromUser(userId, {limit: 8});
+
+    if (!userId) return redirectToSignIn();
+
+    const allProducts = await getAllProductsFromUser(userId, {});
+
+    if (allProducts.length === 0) {
+        return <NoProduct/>
+    }
 
     return (
         <>
@@ -21,10 +25,7 @@ async function DashboardPage() {
                 <div className='mt-8 m-auto flex flex-col space-y-4 '>
                     <div className='flex justify-between items-center'>
                         <div className='flex flex-col gap-y-2'>
-                            <h2 className='text-2xl font-bold group flex gap-2 items-center justify-between '>
-                                <Link href={"/dashboard/products"} className='hover:underline'> Products </Link>
-                                <ArrowRightIcon className='size-6 transform group-hover:translate-x-1 transition-transform'/>
-                            </h2>
+                            <h2 className='text-2xl font-bold'>Products</h2>
                             <p className='text-gray-500'>Here are all the products available</p>
                         </div>
                         <Button asChild>
@@ -43,5 +44,4 @@ async function DashboardPage() {
     );
 }
 
-
-export default DashboardPage;
+export default Page;

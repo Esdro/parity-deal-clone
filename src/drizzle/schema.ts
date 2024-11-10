@@ -195,3 +195,22 @@ export const UserSubscriptionTable = pgTable(
     ).on(table.stripeCustomerId),
   })
 )
+
+/*
+export const cart = pgTable("cart", {
+    userId: text("user_id").notNull().primaryKey(),
+    productId: text("product_id").notNull(),
+    createdAt,
+}, t => ({
+   productIdIndex: index("cart_product_index").on(t.productId)
+})
+)
+
+export const cartRelations = relations(cart, ({ one }) => ({
+    product: one(ProductTable, {
+        fields: [cart.productId],
+        references: [ProductTable.id],
+    }),
+}))
+*/
+
