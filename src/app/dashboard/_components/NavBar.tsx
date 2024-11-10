@@ -1,8 +1,9 @@
 import React from 'react';
 import BrandLogo from '@/components/BrandLogo';
-import { UserButton } from '@clerk/nextjs';
+import {UserButton} from '@clerk/nextjs';
 import Link from 'next/link';
 import {ThemeModeToggle} from "@/components/theme/themeToggler";
+import ResponsiveNav from "@/components/responsive/mobile-nav";
 
 function DashboardNavBar() {
     return (
@@ -10,11 +11,13 @@ function DashboardNavBar() {
             <Link className='mr-auto' href={"/dashboard"}>
                 <BrandLogo/>
             </Link>
-            <Link href="/dashboard/products"> Products  </Link>
-            <Link href="/dashboard/analytics"> Analytics  </Link>
-            <Link href="/dashboard/subscriptions"> Subscriptions  </Link>
-            <UserButton/>
-            <ThemeModeToggle/>
+            <ResponsiveNav side="right">
+                <Link href="/dashboard/products"> Products </Link>
+                <Link href="/dashboard/analytics"> Analytics </Link>
+                <Link href="/dashboard/subscriptions"> Subscriptions </Link>
+                <UserButton/>
+                <ThemeModeToggle/>
+            </ResponsiveNav>
         </header>
     );
 }
