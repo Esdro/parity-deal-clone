@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
+import {ThemeModeToggle} from "@/components/theme/themeToggler";
 
 function NavBar() {
   return (
@@ -32,6 +33,8 @@ function NavBar() {
             </SignInButton>
            </SignedOut>
         </span>
+
+          <ThemeModeToggle/>
       </nav>
     </header>
   );

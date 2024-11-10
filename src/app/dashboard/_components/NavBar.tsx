@@ -2,6 +2,7 @@ import React from 'react';
 import BrandLogo from '@/components/BrandLogo';
 import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
+import {ThemeModeToggle} from "@/components/theme/themeToggler";
 
 function DashboardNavBar() {
     return (
@@ -10,9 +11,10 @@ function DashboardNavBar() {
                 <BrandLogo/>
             </Link>
             <Link href="/dashboard/products"> Products  </Link>
-            <Link href="/dashboard/discounts"> Analytics  </Link>
+            <Link href="/dashboard/analytics"> Analytics  </Link>
             <Link href="/dashboard/subscriptions"> Subscriptions  </Link>
             <UserButton/>
+            <ThemeModeToggle/>
         </header>
     );
 }
