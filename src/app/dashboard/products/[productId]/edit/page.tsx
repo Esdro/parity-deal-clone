@@ -41,9 +41,9 @@ async function EditProductPage({params, searchParams}) {
         <PageWithReturnButton pageTitle={` Edit " ${product.name} " `} returnButtonHref={"/dashboard"}>
             <Tabs defaultValue={tab} orientation='vertical' className=" rounded-lg m-auto ">
                 <TabsList className=' min-h-[40px] bg-card-foreground text-card '>
-                    <TabsTrigger className='min-h-[30px] ' value="details">Product Details</TabsTrigger>
-                    <TabsTrigger className='min-h-[30px] ' value="country">Countries Discount </TabsTrigger>
-                    <TabsTrigger className='min-h-[30px] ' value="customization">Banner Customization</TabsTrigger>
+                    <TabsTrigger className='min-h-[30px] ' value="details">Details</TabsTrigger>
+                    <TabsTrigger className='min-h-[30px] ' value="country"> Discounts </TabsTrigger>
+                    <TabsTrigger className='min-h-[30px] ' value="customization">Customization</TabsTrigger>
                 </TabsList>
                 <div className='mt-8'>
                     <TabsContent value="details">

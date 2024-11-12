@@ -13,6 +13,10 @@ async function DashboardPage() {
     const {userId, redirectToSignIn} = await auth();
     if (!userId) return  redirectToSignIn();
 
+    // const prod = await getProductForBanner({id: '82697c88-73e6-40e6-8a76-d554cd7ad6f0', countryCode: 'IN', url: "http://127.0.0.1:5500"});
+    // console.log('prod', prod);
+
+
     const allProducts = await getAllProductsFromUser(userId, {limit: 8});
 
     return (
