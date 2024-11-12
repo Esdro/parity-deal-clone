@@ -58,7 +58,7 @@ function getCountryCode(request: NextRequest) {
     // const data = await response.json();
     // return data.country_code;
 
-    if (request.geo?.geo.country) return request.geo.country as string;
+    if (request["geo"]?.geo.country) return request["geo"].country as string;
 
     if (process.env.NODE_ENV === 'development') return env.TEST_COUNTRY_CODE as string;
 }
