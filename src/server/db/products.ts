@@ -297,27 +297,31 @@ export async function updateProductCustomization(data: Partial<typeof ProductCus
 
 export async function getProductForBanner({id, countryCode, url}: { id: string, countryCode: string, url: string }) {
 
-    console.log('getProductForBanner', id, countryCode, url);
+    const urlFormatted = removeTrailingSlash(url);
+
     const cacheFn = dbCache(getProductForBannerInternal, {
         tags: [
-            getIdTag(CACHE_TAGS.products, id,),
+            getIdTag(CACHE_TAGS.products, id),
             getGlobalTag(CACHE_TAGS.countries),
+            getGlobalTag(CACHE_TAGS.products),
             getGlobalTag(CACHE_TAGS.countryGroups),
         ],
     })
 
-    return cacheFn({id, countryCode, url})
+    return cacheFn({id, countryCode, url: urlFormatted})
 
 }
 
 async function getProductForBannerInternal({id, countryCode, url}: { id: string, countryCode: string, url: string }) {
 
-    /*  const data = await db.query.ProductTable.findFirst({
-          where: ({ id: idCol, url: urlCol }, { eq, and }) => and(eq(idCol, id), eq(urlCol, removeTrailingSlash(url))),
+
+      const data = await db.query.ProductTable.findFirst({
+          where: ({ id: idCol, url: urlCol }, { and, eq }) =>and(eq(idCol, id), eq(urlCol, url)),
           columns: {
               id: true,
-              clerkUserId: true
-          }  ,
+              clerkUserId: true,
+              url: true
+          },
           with: {
               productCustomization: true,
               countryGroupDiscounts: {
@@ -342,40 +346,7 @@ async function getProductForBannerInternal({id, countryCode, url}: { id: string,
                   }
               }
           }
-      })*/
-
-    const data = await db.query.ProductTable.findFirst({
-        where: ({id: idCol, url: urlCol}, {eq, and}) =>
-            and(eq(idCol, id), eq(urlCol, removeTrailingSlash(url))),
-        columns: {
-            id: true,
-            clerkUserId: true,
-        },
-        with: {
-            productCustomization: true,
-            countryGroupDiscounts: {
-                columns: {
-                    coupon: true,
-                    discountPercentage: true,
-                },
-                with: {
-                    countryGroup: {
-                        columns: {},
-                        with: {
-                            countries: {
-                                columns: {
-                                    id: true,
-                                    name: true,
-                                },
-                                limit: 1,
-                                where: ({code}, {eq}) => eq(code, countryCode),
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    });
+      })
 
     const discount = data?.countryGroupDiscounts.find(discount => discount.countryGroup.countries.length > 0);
     const country = discount?.countryGroup.countries.at(0);

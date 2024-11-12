@@ -16,9 +16,11 @@ export async function GET(request: NextRequest, {params}) {
     const requestingUrl = headersMap.get('referer') || headersMap.get('origin');
 
     const countryCode = getCountryCode(request);
-   //  console.log('requestingUrl', requestingUrl);
+
+    // console.log('requestingUrl', requestingUrl);
 
     if (!requestingUrl || !productId || !countryCode) return new NextResponse("Not Found", {status: 500});
+
 
     const {product, discount, country} = await getProductForBanner({
         id: productId,
@@ -26,7 +28,6 @@ export async function GET(request: NextRequest, {params}) {
         url: requestingUrl
     })
 
-     console.log('product', product);
     if (!product) return new NextResponse("Product not found or bad url ", {status: 401});
 
     const canShow = await canShowBanner(product.clerkUserId)
@@ -90,19 +91,24 @@ async function getJsContent(
     const {renderToStaticMarkup} = await import("react-dom/server");
 
     return `
-            const banner = document.createElement('div');
-            banner.id = 'custom-banner-from-cpp';
-            banner.innerHTML = " ${renderToStaticMarkup(createElement(Banner, {
-        message: product.customization.locationMessage,
-        mappings: {
-            country: country.name,
-            coupon: discount.coupon,
-            discount: (discount.percentage * 100).toString(),
-        },
-        customization: product.customization,
-        canRemoveBranding: canRemove
-    }))}"
-    
-    document.querySelector('${product.customization.bannerContainer}').prepend(...banner.children);
-    `.replace(/(\r\n|\n\r)/g, '');
+        const banner = document.createElement("div");
+        banner.innerHTML = '${renderToStaticMarkup(
+            createElement(Banner, {
+                message: product.customization.locationMessage,
+                mappings: {
+                    country: country.name,
+                    coupon: discount.coupon,
+                    discount: (discount.percentage * 100).toString(),
+                },
+                customization: product.customization,
+                canRemoveBranding: canRemove
+            })
+        )}';
+        document.querySelector("${
+            product.customization.bannerContainer
+        }").prepend(...banner.children);    
+    `.replace(/(\r\n|\n|\r)/g, "");
+
+
+
 }
