@@ -1,21 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { SignUpButton } from "@clerk/nextjs";
-import { ArrowRightIcon, CheckIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React from "react";
 import { NeonIcon } from "./_icons/Neon";
 import { ClerkIcon } from "./_icons/Clerk";
 import { subscriptionTiersInOrder } from "@/data/subscriptionTiers";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { formatCompactNumber } from "@/lib/formatter";
-import { cn } from "@/lib/utils";
 import BrandLogo from "@/components/BrandLogo";
 import {PricingCards} from "@/components/PricingCards";
 import {FooterLinkGroup} from "@/components/FooterLinkGroup";

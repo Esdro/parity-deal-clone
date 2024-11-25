@@ -4,8 +4,6 @@ import {and, count, eq, inArray, sql} from "drizzle-orm";
 import {CACHE_TAGS, dbCache, getGlobalTag, getIdTag, getUserTag, revalidateDbCache} from "@/lib/cache";
 import {notFound} from "next/navigation";
 import {BatchItem} from "drizzle-orm/batch";
-
-import {CountryGroupsDiscountSchema} from "@/schemas/countryGroups";
 import {removeTrailingSlash} from "@/lib/utils";
 
 
@@ -21,7 +19,7 @@ export async function addProduct(data: typeof ProductTable.$inferInsert) {
         }).onConflictDoNothing({
             target: ProductCustomizationTable.productId
         })
-    } catch (e) {
+    } catch (e ) {
         await db.delete(ProductTable).where(eq(ProductTable.id, newProduct.id))
     }
 

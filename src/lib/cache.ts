@@ -29,10 +29,19 @@ export function clearFullCache() {
 }
 
 
+/**
+ * Caches the result of a database query function with specified tags.
+ *
+ * @template T - The type of the function to be cached, which returns a Promise.
+ * @param {Function} cb - The database query function to be cached.
+ * @param {Object} options - The options for caching.
+ * @param {ValidTags[]} options.tags - The tags associated with the cache.
+ * @returns {Function} - The cached version of the database query function.
+ */
 export function dbCache<T extends (...args: any[]) => Promise<any>>(
     cb: Parameters<typeof unstable_cache<T>>[0],
     {tags}: {tags: ValidTags[]}
-) {
+): T {
    return cache(unstable_cache<T>(cb, undefined, {tags: [...tags, "*"]}))
 }
 

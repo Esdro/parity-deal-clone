@@ -93,22 +93,21 @@ async function getJsContent(
     return `
         const banner = document.createElement("div");
         banner.innerHTML = '${renderToStaticMarkup(
-            createElement(Banner, {
-                message: product.customization.locationMessage,
-                mappings: {
-                    country: country.name,
-                    coupon: discount.coupon,
-                    discount: (discount.percentage * 100).toString(),
-                },
-                customization: product.customization,
-                canRemoveBranding: canRemove
-            })
-        )}';
+        createElement(Banner, {
+            message: product.customization.locationMessage,
+            mappings: {
+                country: country.name,
+                coupon: discount.coupon,
+                discount: (discount.percentage * 100).toString(),
+            },
+            customization: product.customization,
+            canRemoveBranding: canRemove
+        })
+    )}';
         document.querySelector("${
-            product.customization.bannerContainer
-        }").prepend(...banner.children);    
+        product.customization.bannerContainer
+    }").prepend(banner);    
     `.replace(/(\r\n|\n|\r)/g, "");
-
 
 
 }
