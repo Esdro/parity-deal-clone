@@ -3,10 +3,11 @@ import {auth} from "@clerk/nextjs/server";
 import HasPermission from "@/components/HasPermission";
 import {canAccessAnalytics} from "@/server/permissions";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {getViewsByCountryChartData, getViewsByPPPChartData} from "@/server/db/productViews";
+import {getViewsByCountryChartData, getViewsByDayChartData, getViewsByPPPChartData} from "@/server/db/productViews";
 import {CHART_INTERVALS} from "@/lib/constants";
 import ViewsByCountryChart from "@/app/dashboard/_components/charts/by-country";
 import ViewsByPPPChart from "@/app/dashboard/_components/charts/by-ppp";
+import ViewsByDayChart from "@/app/dashboard/_components/charts/by-day";
 
 export default async function AnalyticsPage({searchParams}) {
     const {interval, timezone, productId} = await searchParams;
@@ -17,7 +18,7 @@ export default async function AnalyticsPage({searchParams}) {
     const countryCardProps = {
         timezone: timezone ?? 'UTC',
         productId, userId,
-        interval: CHART_INTERVALS[interval as keyof typeof CHART_INTERVALS] ?? CHART_INTERVALS.last90Days
+        interval: CHART_INTERVALS[interval as keyof typeof CHART_INTERVALS] ?? CHART_INTERVALS.last30Days
     };
 
     const permission = await canAccessAnalytics(userId);
@@ -26,10 +27,8 @@ export default async function AnalyticsPage({searchParams}) {
             <h1 className="text-3xl font-semibold mb-8">Analytics </h1>
             <HasPermission permission={permission} renderFallback>
                 <div className="flex flex-col gap-8">
-                    <ViewsByDayCard/>
-                    <Suspense fallback={<p>Loading...</p>}>
-                        <ViewsByPPPCard  {...countryCardProps}/>
-                    </Suspense>
+                    <ViewsByDayCard {...countryCardProps}/>
+                      <ViewsByPPPCard  {...countryCardProps}/>
                     <ViewsByCountryCard  {...countryCardProps} />
                 </div>
             </HasPermission>
@@ -38,14 +37,16 @@ export default async function AnalyticsPage({searchParams}) {
 }
 
 
-async function ViewsByDayCard() {
+async function ViewsByDayCard(props: CountryChartDataProps) {
+    const chartData = await getViewsByDayChartData(props);
+
     return (
         <Card>
             <CardHeader>
                 <CardTitle className="text-xl text-muted-foreground"> Views per day </CardTitle>
             </CardHeader>
             <CardContent>
-                <p className="text-muted-foreground text-neutral-600">Coming soon</p>
+                <ViewsByDayChart chartData={chartData}/>
             </CardContent>
         </Card>
     )

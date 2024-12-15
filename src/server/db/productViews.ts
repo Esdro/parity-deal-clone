@@ -18,6 +18,19 @@ export async function getProductViewCount(userId: string, startDate: Date) {
 
 }
 
+export async function getViewsByDayChartData({timezone, productId, userId, interval}: CountryChartDataProps) {
+
+    const cacheFn = dbCache(getViewsByDayChartDataInternal, {
+        tags: [
+            getUserTag(CACHE_TAGS.productViews, userId),
+            !productId ? getUserTag(CACHE_TAGS.products, userId) : getIdTag(CACHE_TAGS.products, productId),
+        ],
+    })
+
+    return cacheFn({timezone, productId, userId, interval});
+
+}
+
 export async function getViewsByCountryChartData({timezone, productId, userId, interval}: CountryChartDataProps) {
 
     const cacheFn = dbCache(getViewsByCountryChartDataInternal, {
@@ -118,6 +131,39 @@ export async function countProductViewsInternal(userId: string, startDate: Date)
     return counts[0].productViewsCount ?? 0;
 }*/
 
+async function getViewsByDayChartDataInternal({timezone, productId, userId, interval,}: CountryChartDataProps) {
+    const productsSq = getProductSubQuery(productId, userId)
+    const productViewSq = db.$with("productViews").as(
+        db
+            .with(productsSq)
+            .select({
+                visitedAt: sql`${ProductViewTable.visitedAt}
+                AT TIME ZONE
+                ${timezone}`
+                    .inlineParams()
+                    .as("visitedAt"),
+                productId: productsSq.id,
+            })
+            .from(ProductViewTable)
+            .innerJoin(productsSq, eq(productsSq.id, ProductViewTable.productId))
+    )
+
+    return await db
+        .with(productViewSq)
+        .select({
+            date: interval
+                .dateGrouper(sql.raw("series"))
+                .mapWith(dateString => interval.dateFormatter(new Date(dateString))),
+            views: count(productViewSq.visitedAt),
+        })
+        .from(interval.sql)
+        .leftJoin(productViewSq, ({date}) =>
+            eq(interval.dateGrouper(productViewSq.visitedAt), date)
+        )
+        .groupBy(({date}) => [date])
+        .orderBy(({date}) => date)
+}
+
 
 /**
  * Get the number of product views to construct a chart
@@ -192,6 +238,7 @@ export async function getViewsByPPPChartDataInternal({timezone, productId, userI
     )
 
 }
+
 
 function getProductSubQuery(productId: string | undefined, userId: string) {
     return db.$with("products").as(
