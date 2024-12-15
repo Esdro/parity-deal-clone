@@ -3,6 +3,7 @@ import { db } from "@/drizzle/db"
 import { UserSubscriptionTable} from "@/drizzle/schema"
 import { CACHE_TAGS, dbCache, getUserTag, revalidateDbCache } from "@/lib/cache"
 import {eq, SQL} from "drizzle-orm"
+import {revalidatePath} from "next/cache";
 
 export async function createUserSubscription(
     data: typeof UserSubscriptionTable.$inferInsert
@@ -70,4 +71,5 @@ export async function  updateUsersSubscriptionTier(where: SQL, data : Partial<ty
         })
 
     }
+    revalidatePath("/dashboard/subscriptions");
 }
