@@ -21,7 +21,8 @@ export const metadata: Metadata = {
         type: "website",
         locale: "fr_FR",
         url: "https://p-clone.vercel.app/",
-        images: ['../../public/icon.png']
+        images: ['/icon.png'],
+        siteName: "Custom PPP - Un clone de Parity Deal",
 
     },
     authors:[
