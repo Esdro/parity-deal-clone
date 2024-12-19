@@ -14,7 +14,10 @@ export type PricingCardProps = {
     canRemoveBranding: boolean,
     priceInCents: number,
     maxNumberOfProducts: number,
-    maxNumberOfVisits: number,
+    maxNumberOfVisits: number
+}
+
+type PricingCardPropsWithLang = PricingCardProps & {
     lang: "en" | "es" | "fr"
 }
 
@@ -27,7 +30,7 @@ export async function PricingCards({
                                  maxNumberOfProducts,
                                  maxNumberOfVisits,
                                  lang
-                             }: PricingCardProps) {
+                             }: PricingCardPropsWithLang) {
     const isMostPopular = name == "Standard";
 
     const dict = await getDictionary(lang);
