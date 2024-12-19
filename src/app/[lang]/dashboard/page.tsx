@@ -13,7 +13,8 @@ import { getDictionary } from '../../../../get-dictionary';
 async function DashboardPage({params}) {
     const {lang} = await params;
 
-  const dict = await getDictionary(lang);
+    const l = lang as 'en' | 'es' | 'fr';
+  const dict = await getDictionary(l);
 
     const {userId, redirectToSignIn} = await auth();
     if (!userId) return  redirectToSignIn();
@@ -37,7 +38,7 @@ async function DashboardPage({params}) {
                             <p className='text-gray-500'>Here are all the products available</p>
                         </div>
                         <Button asChild>
-                            <Link href={'/dashboard/products/new'}>
+                            <Link href={`/${lang}/dashboard/products/new`}>
                                 <PlusIcon className='size-6 '/>
                                 New product
                             </Link>

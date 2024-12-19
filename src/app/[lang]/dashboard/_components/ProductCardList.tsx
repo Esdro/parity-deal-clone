@@ -1,21 +1,23 @@
+
 import {ProductTable} from "@/drizzle/schema";
 import React from "react";
 import {ProductCard} from "@/app/[lang]/dashboard/_components/ProductCard";
 
 type ProductGridListProps = {
     products: typeof ProductTable.$inferInsert[];
-    lang: "fr" | "en"
+    lang: "en" | "es" | "fr";
 };
 
 /**
  * Component that displays a grid of products; each product is displayed as a card
  * @param products
+ * @param lang
  * @constructor
  */
 function ProductGridList({products, lang}: ProductGridListProps) {
     
 
-    console.log(lang);
+   // console.log(lang);
     
     
     return (

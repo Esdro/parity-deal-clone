@@ -20,12 +20,13 @@ import {auth} from "@clerk/nextjs/server";
 
 type ProductCardProps = {
     product: typeof ProductTable.$inferInsert
-    lang: "fr" | "en"
+    lang: "en" | "es" | "fr"
 };
 
 /**
  * Component that displays a product as a card
  * @param product - the product to display
+ * @param lang
  * @constructor
  */
 export async function ProductCard({product, lang}: ProductCardProps) {
