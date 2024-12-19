@@ -1,0 +1,59 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "pricing": "Tarification",
+    "about": "À propos",
+    "dashboard": "Tableau de bord",
+    "login": "Connexion",
+    "products": "Produits",
+    "analytics": "Analytique",
+    "subscriptions": "Abonnements"
+  },
+  "siteHomePage": {
+    "heroSection": {
+      "title": "Des prix chers, pour plus de ventes !",
+      "subtitle": "Le meilleur logiciel pour des prix et tarifs groupés, en fonction de vos besoins, et du pouvoir d'achat de vos clients aussi. Essayez gratuitement !",
+      "ctaButtonText": "J'essaie gratuitement"
+    },
+    "trustSection": {
+      "title": "Elles nous font confiances..."
+    },
+    "pricingSection": {
+      "title": "Des logiciels de tarification qui se paient 20 fois plus",
+      "subtitle": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+      "ctaButtonText": "Get started for free"
+    }
+  },
+  "footerSection": {
+    "navigation": {
+      "products": "Nos produits",
+      "apiAndDocs": "Pour les développeurs",
+      "ressources": "Ressources",
+      "contact": "Contactez-nous"
+    }
+  },
+  "pricingCard": {
+    "perMonth": "visites à la page de tarification/mois",
+    "perYear": "visites à la page de tarification/an",
+    "canAccessAnalytics": "Accès aux analyses avancées",
+    "canCustomizeBanner": "Personnalisation de bannière",
+    "canRemoveBranding": "Supprimer la marque personnalisée de PPP",
+    "ctaButtonText": "J'essaie gratuitement",
+    "oneProduct": "Produit",
+    "multipleProducts": "Produits",
+    "pppDiscount": "Remise PPP"
+  },
+  "dashboard": {
+    "noProducts": {
+      "title": "Aucun produit disponible",
+      "subtitle": "Vous devez ajouter des produits pour les voir ici.",
+      "ctaButtonText": "Ajouter un produit"
+    },
+    "accessDenied": {
+      "title": "Accès refusé",
+      "bannerReason": "Vous ne pouvez pas enregistrer toutes vos personnalisations sur la bannière tant que vous n'avez pas mis à niveau votre compte.",
+      "ctaButtonText": "Mettre à niveau maintenant"
+    }
+  }
+}

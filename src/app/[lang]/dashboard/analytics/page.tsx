@@ -5,12 +5,13 @@ import {canAccessAnalytics} from "@/server/permissions";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {getViewsByCountryChartData, getViewsByDayChartData, getViewsByPPPChartData} from "@/server/db/productViews";
 import {CHART_INTERVALS} from "@/lib/constants";
-import ViewsByCountryChart from "@/app/dashboard/_components/charts/by-country";
-import ViewsByPPPChart from "@/app/dashboard/_components/charts/by-ppp";
-import ViewsByDayChart from "@/app/dashboard/_components/charts/by-day";
+import ViewsByCountryChart from "@/app/[lang]/dashboard/_components/charts/by-country";
+import ViewsByPPPChart from "@/app/[lang]/dashboard/_components/charts/by-ppp";
+import ViewsByDayChart from "@/app/[lang]/dashboard/_components/charts/by-day";
 
-export default async function AnalyticsPage({searchParams}) {
+export default async function AnalyticsPage({searchParams,params}) {
     const {interval, timezone, productId} = await searchParams;
+    const {lang} = await params;
     const {userId, redirectToSignIn} = await auth();
 
     if (!userId) return redirectToSignIn();

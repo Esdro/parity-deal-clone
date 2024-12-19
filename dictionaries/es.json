@@ -1,0 +1,59 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "features": "Características",
+    "pricing": "Precios",
+    "about": "Acerca de",
+    "dashboard": "Tablero",
+    "login": "Iniciar sesión",
+    "products": "Productos",
+    "analytics": "Analítica",
+    "subscriptions": "Suscripciones"
+  },
+  "siteHomePage": {
+    "heroSection": {
+      "title": "Menos precios, muchos vendedoras !",
+      "subtitle": "El mejor software para precios y tarifas grupales, según sus necesidades y el poder adquisitivo de sus clientes. ¡Prueba gratis!",
+      "ctaButtonText": "Vamos"
+    },
+    "trustSection": {
+      "title": "Confianza de las mejores empresas modernas"
+    },
+    "pricingSection": {
+      "title": "Software de precios que se paga solo 20 veces",
+      "subtitle": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+      "ctaButtonText": "Get started for free"
+    }
+  },
+  "footerSection": {
+    "navigation": {
+      "products": "Productos",
+      "apiAndDocs": "Api & Docs",
+      "ressources": "Recursos",
+      "contact": "Contacto"
+    }
+  },
+  "pricingCard": {
+    "perMonth": "visitas a la página de precios/mes",
+    "perYear": "visitas a la página de precios/año",
+    "canAccessAnalytics": "Analítica avanzada",
+    "canCustomizeBanner": "Personalización de banner",
+    "canRemoveBranding": "Eliminar marca personalizada de PPP",
+    "ctaButtonText": "Prueba gratis",
+    "oneProduct": "Producto",
+    "multipleProducts": "Productos",
+    "pppDiscount": "Descuento PPP"
+  },
+  "dashboard": {
+    "noProducts": {
+      "title": "No hay productos disponibles",
+      "subtitle": "Debe agregar productos a su cuenta para verlos aquí.",
+      "ctaButtonText": "Agregar un producto"
+    },
+    "accessDenied": {
+      "title": "Acceso denegado",
+      "bannerReason": "No puede guardar todas sus personalizaciones en el banner hasta que actualice su cuenta.",
+      "ctaButtonText": "Actualizar ahora"
+    }
+  }
+}

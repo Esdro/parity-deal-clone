@@ -13,13 +13,14 @@ import {
 import {DotsVerticalIcon} from "@radix-ui/react-icons";
 import Link from "next/link";
 import {Dialog, DialogTrigger} from "@/components/ui/dialog";
-import AddProductToSiteDialogContent from "@/app/dashboard/_components/AddProductToSiteDialogContent";
+import AddProductToSiteDialogContent from "@/app/[lang]/dashboard/_components/AddProductToSiteDialogContent";
 import {AlertDialog, AlertDialogTrigger} from "@/components/ui/alert-dialog"
-import DeleteProductDialogContent from "@/app/dashboard/_components/DeleteProductDialogContent";
+import DeleteProductDialogContent from "@/app/[lang]/dashboard/_components/DeleteProductDialogContent";
 import {auth} from "@clerk/nextjs/server";
 
 type ProductCardProps = {
     product: typeof ProductTable.$inferInsert
+    lang: "fr" | "en"
 };
 
 /**
@@ -27,7 +28,7 @@ type ProductCardProps = {
  * @param product - the product to display
  * @constructor
  */
-export async function ProductCard({product}: ProductCardProps) {
+export async function ProductCard({product, lang}: ProductCardProps) {
 
     const {userId} = await auth();
 
@@ -50,7 +51,7 @@ export async function ProductCard({product}: ProductCardProps) {
                                     <DropdownMenuSeparator/>
                                     <DropdownMenuItem asChild>
                                         <Link className='cursor-pointer hover:bg-accent '
-                                              href={`/dashboard/products/${product.id}/edit?tab=details`}>Edit product</Link>
+                                              href={`/${lang}/dashboard/products/${product.id}/edit?tab=details`}>Edit product</Link>
                                     </DropdownMenuItem>
                                     <DialogTrigger asChild>
                                         <DropdownMenuItem className='cursor-pointer'>Add to site </DropdownMenuItem>

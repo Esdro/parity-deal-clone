@@ -13,6 +13,10 @@ import {AccessDenied} from "@/components/AccessDenied";
 import {Banner} from "@/components/Banner";
 import {updateProductCustomizationFromDB} from "@/server/actions/product";
 import {useToast} from "@/hooks/use-toast";
+import {env} from "@/data/env/client";
+import {usePathname} from "next/navigation";
+import {useEffect, useState} from "react";
+import {DictionaryType} from "../../../../../i18n-config";
 
 type ProductCustomizationFormProps = {
     customization: {
@@ -41,6 +45,19 @@ export default function ProductCustomizationForm({canCustomizeBanner, customizat
             classPrefix: customization.classPrefix ?? "",
         }
     })
+    const lang = usePathname().split("/")[1] as "en" | "es" | "fr";
+    const [dict, setDict] = useState<Partial<DictionaryType>>({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`${env.NEXT_PUBLIC_SERVER_URL}/api/intl`, {
+                headers: {"lang": lang}
+            });
+            const dict = await response.json();
+            setDict(dict);
+        }
+        fetchData();
+    }, [lang]);
 
     const formValues = form.watch();
 
@@ -58,11 +75,14 @@ export default function ProductCustomizationForm({canCustomizeBanner, customizat
     }
 
 
+    if (!dict || !dict.dashboard?.accessDenied) {
+        return null;
+    }
 
     return (
         <>
             {!canCustomizeBanner && (
-                <AccessDenied fallbackMessage={ " You can not save all your customizations on the banner until you upgraded your account.  " } />
+                <AccessDenied fallbackMessage={dict.dashboard.accessDenied.bannerReason as string} />
             ) }
 
             <Banner

@@ -3,13 +3,18 @@ import NoProduct from './_components/NoProduct';
 import {getAllProductsFromUser} from "@/server/db/products";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import ProductGridList from "@/app/dashboard/_components/ProductCardList";
+import ProductGridList from "@/app/[lang]/dashboard/_components/ProductCardList";
 import {PlusIcon} from "@radix-ui/react-icons";
 import {auth} from "@clerk/nextjs/server";
 import {ArrowRightIcon} from "lucide-react";
+import { getDictionary } from '../../../../get-dictionary';
 
 
-async function DashboardPage() {
+async function DashboardPage({params}) {
+    const {lang} = await params;
+
+  const dict = await getDictionary(lang);
+
     const {userId, redirectToSignIn} = await auth();
     if (!userId) return  redirectToSignIn();
 
@@ -26,7 +31,7 @@ async function DashboardPage() {
                     <div className='flex justify-between items-center'>
                         <div className='flex flex-col gap-y-2'>
                             <h2 className='text-2xl font-bold group flex gap-2 items-center justify-between '>
-                                <Link href={"/dashboard/products"} className='hover:underline'> Products </Link>
+                                <Link href={`/${lang}/dashboard/products`} className='hover:underline'> Products </Link>
                                 <ArrowRightIcon className='size-6 transform group-hover:translate-x-1 transition-transform'/>
                             </h2>
                             <p className='text-gray-500'>Here are all the products available</p>
@@ -38,7 +43,7 @@ async function DashboardPage() {
                             </Link>
                         </Button>
                     </div>
-                    <ProductGridList products={allProducts}/>
+                    <ProductGridList lang={lang} products={allProducts}/>
                 </div>
             ) : (
                 <NoProduct/>

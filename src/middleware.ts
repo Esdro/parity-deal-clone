@@ -1,4 +1,19 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
+/* import { match } from '@formatjs/intl-localematcher';
+import Negotiator from 'negotiator';
+
+
+
+ 
+const locales = ["fr-FR",'en-US'];
+
+const headers = {"accept-language": "fr-FR,fr;q=0.5"}
+
+const langs = new Negotiator({ headers }).language() as unknown as string[];
+
+const defaultLocale = "fr-FR";
+
+match(langs,locales,defaultLocale); */
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -12,6 +27,7 @@ export default clerkMiddleware(async (auth, req) => {
     await auth.protect()
   }
 })
+
 
 export const config = {
   matcher: [

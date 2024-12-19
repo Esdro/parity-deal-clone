@@ -1,18 +1,18 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs";
-import PageWithReturnButton from "@/app/dashboard/_components/page-with-return-button";
+import PageWithReturnButton from "@/app/[lang]/dashboard/_components/page-with-return-button";
 import {getProductById} from "@/server/actions/product";
 import {notFound} from "next/navigation";
 import {auth} from "@clerk/nextjs/server";
-import AddProductForm from "@/app/dashboard/_components/AddProductForm";
+import AddProductForm from "@/app/[lang]/dashboard/_components/AddProductForm";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {ProductTable} from "@/drizzle/schema";
-import CountryGroupsDiscountForm from "@/app/dashboard/_components/CountryGroupForm";
+import CountryGroupsDiscountForm from "@/app/[lang]/dashboard/_components/CountryGroupForm";
 import {getProductCountryGroups, getProductCustomization} from "@/server/db/products";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import {InfoIcon} from "lucide-react";
 import {canCustomizeBanner, canRemoveBranding} from "@/server/permissions";
-import ProductCustomizationForm from "@/app/dashboard/_components/ProductCustomizationForm";
+import ProductCustomizationForm from "@/app/[lang]/dashboard/_components/ProductCustomizationForm";
 
 // Pas bien de le faire dans la nouvelle version 15 de Next.js
 /*
@@ -25,7 +25,7 @@ type  EditProductPageProps = {
 
 async function EditProductPage({params, searchParams}) {
 
-    const {productId} = await params;
+    const {productId, lang} = await params;
     const {tab} = await searchParams;
 
     const {userId} = await auth();
@@ -38,7 +38,7 @@ async function EditProductPage({params, searchParams}) {
 
 
     return (
-        <PageWithReturnButton pageTitle={` Edit " ${product.name} " `} returnButtonHref={"/dashboard"}>
+        <PageWithReturnButton pageTitle={` Edit " ${product.name} " `} returnButtonHref={`/${lang}/dashboard`}>
             <Tabs defaultValue={tab} orientation='vertical' className=" rounded-lg m-auto ">
                 <TabsList className=' min-h-[40px] bg-card-foreground text-card '>
                     <TabsTrigger className='min-h-[30px] ' value="details">Details</TabsTrigger>

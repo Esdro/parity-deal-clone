@@ -3,10 +3,17 @@ import NavBar from "./_components/NavBar";
 
 type Props = {
   children: ReactNode;
+  params: Promise<{
+    lang: "fr" | "en" | "es";
+  }>;
 };
-function MarketingLayout({ children }: Props) {
+async function MarketingLayout({ children, params }: Props) {
+
+  const { lang } = await params;
+
+
   return <div className="selection:bg-[hsl(320,65%,52%,20%)]">
-    <NavBar/>
+    <NavBar lang={lang}/>
     {children}
     </div>;
 }

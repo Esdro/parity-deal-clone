@@ -4,12 +4,14 @@ import {getAllProductsFromUser} from "@/server/db/products";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {PlusIcon} from "@radix-ui/react-icons";
-import ProductGridList from "@/app/dashboard/_components/ProductCardList";
-import NoProduct from "@/app/dashboard/_components/NoProduct";
+import ProductGridList from "@/app/[lang]/dashboard/_components/ProductCardList";
+import NoProduct from "@/app/[lang]/dashboard/_components/NoProduct";
 
-async function Page() {
+async function Page({params}) {
     const {userId, redirectToSignIn} = await auth();
 
+    const {lang} = await params;
+    
 
     if (!userId) return redirectToSignIn();
 
@@ -29,13 +31,13 @@ async function Page() {
                             <p className='text-gray-500'>Here are all the products available</p>
                         </div>
                         <Button asChild>
-                            <Link href={'/dashboard/products/new'}>
+                            <Link href={`/${lang}/dashboard/products/new`}>
                                 <PlusIcon className='size-6 '/>
                                 New product
                             </Link>
                         </Button>
                     </div>
-                    <ProductGridList products={allProducts}/>
+                    <ProductGridList lang={lang} products={allProducts}/>
                 </div>
             ) : (
                 <NoProduct/>

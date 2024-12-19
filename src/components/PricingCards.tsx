@@ -4,6 +4,8 @@ import {formatCompactNumber} from "@/lib/formatter";
 import {SignUpButton} from "@clerk/nextjs";
 import {Button} from "@/components/ui/button";
 import Feature from "@/components/Feature";
+import {getDictionary} from "../../get-dictionary";
+import {twMerge} from "tailwind-merge";
 
 export type PricingCardProps = {
     name: string,
@@ -13,9 +15,10 @@ export type PricingCardProps = {
     priceInCents: number,
     maxNumberOfProducts: number,
     maxNumberOfVisits: number,
+    lang: "en" | "es" | "fr"
 }
 
-export function PricingCards({
+export async function PricingCards({
                                  name,
                                  canAccessAnalytics,
                                  canCustomizeBanner,
@@ -23,8 +26,11 @@ export function PricingCards({
                                  priceInCents,
                                  maxNumberOfProducts,
                                  maxNumberOfVisits,
+                                 lang
                              }: PricingCardProps) {
     const isMostPopular = name == "Standard";
+
+    const dict = await getDictionary(lang);
     return (
         <Card>
             <CardHeader>
@@ -38,18 +44,18 @@ export function PricingCards({
             {" "}
               {formatCompactNumber(maxNumberOfVisits)}{" "}
           </span>{" "}
-                    pricing page visits/month
+                    {dict.pricingCard.perMonth}{" "}
                 </CardDescription>
             </CardHeader>
             <CardContent>
 
                 <SignUpButton>
                     <Button
-                        className="text-lg w-full rounded-lg"
+                        className={twMerge("text-lg w-full rounded-lg", isMostPopular ? "rounded-md" : "")}
                         variant={isMostPopular ? "accent" : "default"}
                     >
                         {" "}
-                        Get started{" "}
+                        {dict.pricingCard.ctaButtonText}{" "}
                     </Button>
                 </SignUpButton>
 
@@ -57,12 +63,12 @@ export function PricingCards({
             <CardFooter className="flex flex-col gap-4 items-start ">
                 <Feature classname="font-bold">
                     {maxNumberOfProducts}{" "}
-                    {maxNumberOfProducts === 1 ? "product" : "products"}
+                    {maxNumberOfProducts === 1 ? dict.pricingCard.oneProduct : dict.pricingCard.multipleProducts}
                 </Feature>
-                <Feature>PPP Discounts</Feature>
-                {canAccessAnalytics && <Feature> Advanced Analytics </Feature>}
-                {canRemoveBranding && <Feature> Remove Custom PPP branding </Feature>}
-                {canCustomizeBanner && <Feature> Banner Customization </Feature>}
+                <Feature>{dict.pricingCard.pppDiscount}</Feature>
+                {canAccessAnalytics && <Feature>  {dict.pricingCard.canAccessAnalytics} </Feature>}
+                {canRemoveBranding && <Feature>  {dict.pricingCard.canRemoveBranding} </Feature>}
+                {canCustomizeBanner && <Feature>  {dict.pricingCard.canCustomizeBanner} </Feature>}
             </CardFooter>
         </Card>
     );

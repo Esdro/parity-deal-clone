@@ -1,6 +1,6 @@
 import React from 'react';
-import PageWithReturnButton from "@/app/dashboard/_components/page-with-return-button";
-import AddProductForm from "@/app/dashboard/_components/AddProductForm";
+import PageWithReturnButton from "@/app/[lang]/dashboard/_components/page-with-return-button";
+import AddProductForm from "@/app/[lang]/dashboard/_components/AddProductForm";
 import {canCreateProduct} from "@/server/permissions";
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from "next/navigation";
@@ -8,7 +8,9 @@ import HasPermission from "@/components/HasPermission";
 
 
 
-async function AddNewProductPage() {
+async function AddNewProductPage({params}: {params: Promise< {lang: "fr" | "en"} > }) {
+
+    const lang = (await params).lang;
 
     const {userId} = await auth();
 
@@ -17,7 +19,7 @@ async function AddNewProductPage() {
     const createProduct = await canCreateProduct(userId);
 
     return (
-        <PageWithReturnButton pageTitle={"New Product"} returnButtonHref={"/dashboard"}>
+        <PageWithReturnButton pageTitle={"New Product"} returnButtonHref={`/${lang}/dashboard`}>
             <HasPermission
                 permission={createProduct}
                 renderFallback={true}

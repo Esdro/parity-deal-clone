@@ -9,25 +9,33 @@ import { subscriptionTiersInOrder } from "@/data/subscriptionTiers";
 import BrandLogo from "@/components/BrandLogo";
 import {PricingCards} from "@/components/PricingCards";
 import {FooterLinkGroup} from "@/components/FooterLinkGroup";
+import { getDictionary } from '../../../../get-dictionary';
 
-function Home() {
+async function Home({params}) {
+  
+  const {lang} = await params;
+
+  const dict = await getDictionary(lang as "en" | "fr" | "es");
+
+  if (!dict) {
+    return <div>Language error...</div>;
+  }
+  
   return (
     <>
       <section className="min-h-screen bg-[radial-gradient(hsl(0,72%,65%,40%),hsl(24,62%,73%,40%),hsl(var(--background))_60%)] flex items-center justify-center text-center text-balance flex-col gap-8 px-4">
         <h1 className="text-6xl lg:text-7xl xl:text-8xl tracking-tighter m-4 font-bold ">
           {" "}
-          Price Smarter, Sell Bigger!{" "}
+          {dict.siteHomePage.heroSection.title} {" "}
         </h1>
         <p className="text-lg lg:text-3xl max-w-screen-xl ">
           {" "}
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed soluta
-          autem dolorum labore facere quasi ipsa magni delectus? Magni ab
-          pariatur placeat quod exercitationem reiciendis?{" "}
+            {dict.siteHomePage.heroSection.subtitle} {" "}
         </p>
 
         <SignUpButton>
           <Button className="text-lg p-6 rounded-xl flex gap-2">
-            Get Started for free <ArrowRightIcon className="size-5" />
+           {dict.siteHomePage.heroSection.ctaButtonText} <ArrowRightIcon className="size-5" />
           </Button>
         </SignUpButton>
 
@@ -38,7 +46,7 @@ function Home() {
         <div className="container py-16 flex flex-col ">
           <h2 className="text-3xl text-balance text-center ">
             {" "}
-            Trusted by the top modern companies{" "}
+           {dict.siteHomePage.trustSection.title} {" "}
           </h2>
 
           <div className="mt-6 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16 ">
@@ -78,11 +86,11 @@ function Home() {
 
       <section className="px-8 py-16 bg-accent/5" id="pricing">
         <h2 className="text-4xl text-center text-balance font-semibold mb-8 ">
-          Pricing software which pays for itself 20x over
+            {dict.siteHomePage.pricingSection.title} {" "}
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-4 max-w-screen-xl mx-auto gap-4 ">
           {subscriptionTiersInOrder.map((tier) => (
-            <PricingCards key={tier.name} {...tier} />
+            <PricingCards key={tier.name} {...tier} lang={lang} />
           ))}
         </div>
       </section>
@@ -94,7 +102,7 @@ function Home() {
 
         <div className="flex flex-col items-center  sm:flex-row gap-8  ">
           <FooterLinkGroup
-            label="Product"
+            label={dict.footerSection.navigation.products}
             links={[
               { label: "Features", href: "/features" },
               { label: "Integrations", href: "/integrations" },
@@ -103,7 +111,7 @@ function Home() {
             ]}
           />
           <FooterLinkGroup
-            label="Api & Docs"
+            label={dict.footerSection.navigation.apiAndDocs}
             links={[
               { label: "Features", href: "/features" },
               { label: "Integrations", href: "/integrations" },
@@ -112,7 +120,7 @@ function Home() {
             ]}
           />
           <FooterLinkGroup
-            label="Ressources"
+            label={dict.footerSection.navigation.ressources}
             links={[
               { label: "Features", href: "/features" },
               { label: "Integrations", href: "/integrations" },
@@ -121,7 +129,7 @@ function Home() {
             ]}
           />
           <FooterLinkGroup
-            label="Contact"
+            label={dict.footerSection.navigation.contact}
             links={[
               { label: "Features", href: "/features" },
               { label: "Integrations", href: "/integrations" },
@@ -138,3 +146,4 @@ function Home() {
 
 
 export default Home;
+

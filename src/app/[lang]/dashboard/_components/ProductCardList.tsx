@@ -1,9 +1,10 @@
 import {ProductTable} from "@/drizzle/schema";
 import React from "react";
-import {ProductCard} from "@/app/dashboard/_components/ProductCard";
+import {ProductCard} from "@/app/[lang]/dashboard/_components/ProductCard";
 
 type ProductGridListProps = {
     products: typeof ProductTable.$inferInsert[];
+    lang: "fr" | "en"
 };
 
 /**
@@ -11,11 +12,16 @@ type ProductGridListProps = {
  * @param products
  * @constructor
  */
-function ProductGridList({products}: ProductGridListProps) {
+function ProductGridList({products, lang}: ProductGridListProps) {
+    
+
+    console.log(lang);
+    
+    
     return (
         <div className='grid grid-cols-1  rounded-2xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4'>
             {products.map((product: typeof ProductTable.$inferInsert) => (
-                <ProductCard key={product.id} product={product}/>
+                <ProductCard key={product.id} product={product} lang={lang}/>
             ))}
         </div>
     );

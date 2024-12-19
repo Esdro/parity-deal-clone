@@ -1,0 +1,59 @@
+{
+  "navigation": {
+    "home": "Site Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "about": "About",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "products": "Products",
+    "analytics": "Analytics",
+    "subscriptions": "Subscriptions"
+  },
+  "siteHomePage": {
+    "heroSection": {
+      "title": "Price Smarter, Sell Bigger!",
+      "subtitle": "The best software for group pricing and rates, based on your needs, and your customers' purchasing power too. Try for free!",
+      "ctaButtonText": "Get started for free"
+    },
+    "trustSection": {
+      "title": "Trusted by the top modern companies"
+    },
+    "pricingSection": {
+      "title": "Pricing software which pays for itself 20x over",
+      "subtitle": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+      "ctaButtonText": "Get started for free"
+    }
+  },
+  "footerSection": {
+    "navigation": {
+      "products": "Products",
+      "apiAndDocs": "Api & Docs",
+      "ressources": "Ressources",
+      "contact": "Contact"
+    }
+  },
+  "pricingCard": {
+    "oneProduct": "Product",
+    "multipleProducts": "Products",
+    "perMonth": "pricing page visits/month",
+    "perYear": "pricing page visits/year",
+    "canAccessAnalytics": "Advanced Analytics",
+    "canCustomizeBanner": "Banner Customization",
+    "canRemoveBranding": "Remove Custom PPP branding",
+    "ctaButtonText": "Get started for free",
+    "pppDiscount": "PPP Discount"
+  },
+  "dashboard": {
+    "noProducts": {
+        "title": "No products available",
+        "subtitle": "You need to add products to see them here.",
+        "ctaButtonText": "Add a product"
+    },
+    "accessDenied": {
+      "title": "Access Denied",
+      "bannerReason": " You can not save all your customizations on the banner until you upgraded your account. ",
+      "ctaButtonText": "Upgrade now"
+    }
+  }
+}
