@@ -8,12 +8,14 @@ import {PlusIcon} from "@radix-ui/react-icons";
 import {auth} from "@clerk/nextjs/server";
 import {ArrowRightIcon} from "lucide-react";
 import { getDictionary } from '../../../../get-dictionary';
+import {Locale} from "../../../../i18n-config";
 
 
 async function DashboardPage({params}) {
     const {lang} = await params;
 
-    const l = lang as 'en' | 'es' | 'fr';
+    const l = lang as Locale;
+
   const dict = await getDictionary(l);
 
     const {userId, redirectToSignIn} = await auth();

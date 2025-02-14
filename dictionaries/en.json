@@ -42,7 +42,12 @@
     "canCustomizeBanner": "Banner Customization",
     "canRemoveBranding": "Remove Custom PPP branding",
     "ctaButtonText": "Get started for free",
-    "pppDiscount": "PPP Discount"
+    "pppDiscount": "PPP Discount",
+    "downgrade": "Downgrade to free plan",
+    "upgrade": "Upgrade to this plan",
+    "manageSubscription": "Manage your subscription",
+    "currentPlan": "Current Plan"
+
   },
   "dashboard": {
     "noProducts": {
@@ -53,7 +58,19 @@
     "accessDenied": {
       "title": "Access Denied",
       "bannerReason": " You can not save all your customizations on the banner until you upgraded your account. ",
+      "analyticsReason": "You can not access advanced analytics until you upgraded your account.",
       "ctaButtonText": "Upgrade now"
+    },
+    "subscriptionPage": {
+      "title": "Your Subscription",
+      "subtitle": "Here you can manage your subscription and billing information.",
+      "ctaButtonText": "Manage your Subscription",
+      "monthly": "Monthly Usage",
+      "numberOfProducts": "Number of Products",
+      "pageVisitThisMonth": "page visits this month",
+      "productCreated": "Product created",
+      "productsCreated": "Products created",
+      "currentPlan": "You're currently on the {plan} plan"
     }
   }
 }

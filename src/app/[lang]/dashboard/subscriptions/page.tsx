@@ -16,10 +16,14 @@ import {
     createCustomerPortalSession,
     createStripeCheckoutSession
 } from "@/server/actions/stripe";
+import {formatDictionnaryText, getDictionary} from "../../../../../get-dictionary";
+import {Locale} from "../../../../../i18n-config";
 
-async function SubscriptionPage() {
-
+async function SubscriptionPage({params}) {
+     const {lang} = await params;
     const {userId, redirectToSignIn} = await auth();
+
+    const dict = await getDictionary(lang);
 
     if (!userId) return redirectToSignIn();
 
@@ -30,16 +34,16 @@ async function SubscriptionPage() {
 
     return (
         <>
-            <h1 className='mb-6 text-3xl font-semibold '> Your subscription </h1>
+            <h1 className='mb-2 text-3xl font-semibold '> {dict.dashboard.subscriptionPage.title} </h1>
 
             <div className='flex flex-col gap-8 mb-8 '>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 '>
+                <div className='grid grid-cols-1  md:grid-cols-2 gap-8 '>
                     <Card>
                         <CardHeader>
-                            <CardTitle className='text-lg'> Monthly Usage </CardTitle>
+                            <CardTitle className='text-lg'> {dict.dashboard.subscriptionPage.monthly} </CardTitle>
                             <CardDescription>
                                 {formatCompactNumber(pricingViewCount)} / {" "}
-                                {formatCompactNumber(tier.maxNumberOfVisits)} pricing page visits this month
+                                {formatCompactNumber(tier.maxNumberOfVisits)} {dict.dashboard.subscriptionPage.pageVisitThisMonth}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -49,10 +53,10 @@ async function SubscriptionPage() {
                     </Card>
                     <Card>
                         <CardHeader>
-                            <CardTitle className='text-lg'> Number of Products </CardTitle>
+                            <CardTitle className='text-lg'> {dict.dashboard.subscriptionPage.numberOfProducts} </CardTitle>
                             <CardDescription>
                                 {formatCompactNumber(productCount)} / {" "}
-                                {formatCompactNumber(tier.maxNumberOfProducts)} products created
+                                {formatCompactNumber(tier.maxNumberOfProducts)} {productCount < 2 ?  dict.dashboard.subscriptionPage.productCreated : dict.dashboard.subscriptionPage.productsCreated}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -65,19 +69,18 @@ async function SubscriptionPage() {
                 {tier != subscriptionTiers.Free && (
                     <Card>
                         <CardHeader>
-                            <CardTitle> You are currently on the {tier.name} Plan </CardTitle>
-                            <CardDescription>
-                                If you would like to upgrade, cancel, or change your payment method, you can do so here.
+                            <CardTitle>{formatDictionnaryText(tier.name, dict.dashboard.subscriptionPage.currentPlan)} </CardTitle>
+                            <CardDescription className='mb-6 text-muted-foreground'>
+                                {dict.dashboard.subscriptionPage.subtitle}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
 
 
-                            <form
+                        <form
                                 action={createCustomerPortalSession}
                             >
-                                <Button variant="accent" className='text-lg rounded-lg ' size="lg"> Manage
-                                    Subscription </Button>
+                                <Button variant="accent" className='text-lg rounded-lg ' size="lg"> {dict.pricingCard.manageSubscription} </Button>
                             </form>
                         </CardContent>
                     </Card>
@@ -86,7 +89,7 @@ async function SubscriptionPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-screen-xl mx-auto">
                 {subscriptionTiersInOrder.map((t) => (
-                    <PricingCard key={t.name} currentTierName={tier.name} {...t} />
+                    <PricingCard lang={lang} key={t.name} currentTierName={tier.name} {...t} />
                 ))}
             </div>
         </>
@@ -97,12 +100,16 @@ async function SubscriptionPage() {
 
 type InternalPricingCardProps = PricingCardProps & {
     currentTierName: TierNames;
+    lang: Locale;
 }
 
-function PricingCard({name, canAccessAnalytics,currentTierName, canCustomizeBanner, canRemoveBranding, priceInCents, maxNumberOfProducts, maxNumberOfVisits,
+async function PricingCard({name, canAccessAnalytics,currentTierName, lang, canCustomizeBanner, canRemoveBranding, priceInCents, maxNumberOfProducts, maxNumberOfVisits,
                      }: InternalPricingCardProps) {
     const isCurrent = currentTierName == name;
     const isFree = "Free" == name;
+
+    const dict = await getDictionary(lang);
+
     return (
         <Card>
             <CardHeader>
@@ -116,7 +123,7 @@ function PricingCard({name, canAccessAnalytics,currentTierName, canCustomizeBann
             {" "}
               {formatCompactNumber(maxNumberOfVisits)}{" "}
           </span>{" "}
-                    pricing page visits/month
+                    {dict.pricingCard.perMonth}{" "}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -128,19 +135,19 @@ function PricingCard({name, canAccessAnalytics,currentTierName, canCustomizeBann
                           className="text-lg w-full rounded-lg"
                           size="lg"
                    >
-                          {isCurrent ? "Current Plan" : isFree ? "Downgrade plan " : "Upgrade plan"}
+                          {isCurrent ? dict.pricingCard.currentPlan : isFree ? dict.pricingCard.downgrade : dict.pricingCard.upgrade}
                    </Button>
                </form>
             </CardContent>
             <CardFooter className="flex flex-col gap-4 items-start ">
                 <Feature classname="font-bold">
                     {maxNumberOfProducts}{" "}
-                    {maxNumberOfProducts === 1 ? "product" : "products"}
+                    {maxNumberOfProducts === 1 ? dict.pricingCard.oneProduct : dict.pricingCard.multipleProducts}
                 </Feature>
-                <Feature>PPP Discounts</Feature>
-                {canAccessAnalytics && <Feature> Advanced Analytics </Feature>}
-                {canRemoveBranding && <Feature> Remove Custom PPP branding </Feature>}
-                {canCustomizeBanner && <Feature> Banner Customization </Feature>}
+                <Feature>{dict.pricingCard.pppDiscount}</Feature>
+                {canAccessAnalytics && <Feature>  {dict.pricingCard.canAccessAnalytics} </Feature>}
+                {canRemoveBranding && <Feature>  {dict.pricingCard.canRemoveBranding} </Feature>}
+                {canCustomizeBanner && <Feature>  {dict.pricingCard.canCustomizeBanner} </Feature>}
             </CardFooter>
         </Card>
     );

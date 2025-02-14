@@ -31,15 +31,23 @@ export function LangToggle() {
 
     let lang2: "fr" | "en" | "es"  = lang;
     let lang3 : "fr" | "en" | "es"  = lang;
+    let lang2Text = "";
+    let lang3Text = "";
     if (lang === "en") {
         lang2 = "es";
+        lang2Text = "Español";
         lang3 = "fr";
+        lang3Text = "Français";
     } else if (lang === "es") {
         lang2 = "fr";
+        lang2Text = "Français";
         lang3 = "en";
+        lang3Text = "English";
     } else {
         lang2 = "en";
+        lang2Text = "English";
         lang3 = "es";
+        lang3Text = "Español";
     }
   const handleLangChange = (lang: "fr" | "en" | "es") => {
 
@@ -66,35 +74,35 @@ export function LangToggle() {
                         src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${lang === "en" ? "US" : lang.toUpperCase()}.svg`}
                         className="border"/>
                     <span className="sr-only">Change Language</span>
-                    {lang === "fr" &&(<span> Fr </span>) }
+                   {/* {lang === "fr" &&(<span> Fr </span>) }
                     {lang === "en" &&(<span> En </span>) }
-                    {lang === "es" &&(<span> Es </span>) }
+                    {lang === "es" &&(<span> Es </span>) }*/}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem className="cursor-pointer flex justify-center items-center w-[50px] hover:bg-accent/5" onClick={() => handleLangChange(lang2)}>
+                <DropdownMenuItem className="cursor-pointer flex justify-center items-center  hover:bg-accent/5" onClick={() => handleLangChange(lang2)}>
                     <Image
                         key={lang}
                         width={22}
                         height={14}
-                        alt={`Drapeau de ${lang2}`}
-                        title={`Drapeau de ${lang2}`}
+                        alt={`Drapeau de ${lang2Text}`}
+                        title={`Drapeau de ${lang2Text}`}
                         src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${lang2 === "en" ? "US" : lang2.toUpperCase()}.svg`}
                         className="border"
                     />
-                    <span> {lang2} </span>
+                    <span> {lang2Text} </span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer flex justify-center items-center w-[50px] hover:bg-accent/5" onClick={() => handleLangChange(lang3)}>
+                <DropdownMenuItem className="cursor-pointer flex justify-center items-center  hover:bg-accent/5" onClick={() => handleLangChange(lang3)}>
                     <Image
                         key={lang3}
                         width={22}
                         height={14}
-                        alt={`Drapeau de ${lang3}`}
-                        title={`Drapeau de ${lang3}`}
+                        alt={`Drapeau de ${lang3Text}`}
+                        title={`Drapeau de ${lang3Text}`}
                         src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${lang3 === "en" ? "US" : lang3.toUpperCase()}.svg`}
                         className="border"
                     />
-                    <span> {lang3} </span>
+                    <span> {lang3Text} </span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

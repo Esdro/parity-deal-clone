@@ -8,7 +8,7 @@ export async function GET(req: NextRequest){
     }
    const lang = req.headers.get('lang') as "fr" | "en" | "es";
 
-    console.log('lang from here', lang);
+   // console.log('lang from here', lang);
 
   const data = await getDictionary(lang);
 

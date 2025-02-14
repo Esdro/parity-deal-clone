@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import Feature from "@/components/Feature";
 import {getDictionary} from "../../get-dictionary";
 import {twMerge} from "tailwind-merge";
+import {Locale} from "../../i18n-config";
 
 export type PricingCardProps = {
     name: string,
@@ -18,7 +19,7 @@ export type PricingCardProps = {
 }
 
 type PricingCardPropsWithLang = PricingCardProps & {
-    lang: "en" | "es" | "fr"
+    lang: Locale
 }
 
 export async function PricingCards({

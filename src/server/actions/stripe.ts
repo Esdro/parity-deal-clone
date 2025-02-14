@@ -103,7 +103,7 @@ export async function createCustomerPortalSession() {
 
     const portalSession = await stripe.billingPortal.sessions.create({
         customer: subscription.stripeCustomerId,
-        return_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/dashboard/subscriptions`
+        return_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/${ClientEnv.NEXT_PUBLIC_DEFAULT_LANGUAGE}/dashboard/subscriptions`
     })
 
     redirect(portalSession.url);
@@ -125,7 +125,7 @@ export async function getSubscriptionUpgradeSessionUrl(tier: PaidTierNames, subs
 
     const portalSession = await stripe.billingPortal.sessions.create({
         customer: subscription.stripeCustomerId,
-        return_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/dashboard/subscriptions`,
+        return_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/${ClientEnv.NEXT_PUBLIC_DEFAULT_LANGUAGE}/dashboard/subscriptions`,
         flow_data: {
             type: "subscription_update_confirm",
             subscription_update_confirm: {
@@ -170,8 +170,8 @@ async function getCheckoutSessionUrl(tier: PaidTierNames, user: User): Promise<s
             }
         ],
         mode: "subscription",
-        success_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/dashboard/subscriptions`,
-        cancel_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/dashboard/subscriptions`,
+        success_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/${ClientEnv.NEXT_PUBLIC_DEFAULT_LANGUAGE}/dashboard/subscriptions`,
+        cancel_url: `${ClientEnv.NEXT_PUBLIC_SERVER_URL}/${ClientEnv.NEXT_PUBLIC_DEFAULT_LANGUAGE}/dashboard/subscriptions`,
     })
 
     return session.url;

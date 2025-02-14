@@ -2,10 +2,11 @@
 import {ProductTable} from "@/drizzle/schema";
 import React from "react";
 import {ProductCard} from "@/app/[lang]/dashboard/_components/ProductCard";
+import {Locale} from "../../../../../i18n-config";
 
 type ProductGridListProps = {
     products: typeof ProductTable.$inferInsert[];
-    lang: "en" | "es" | "fr";
+    lang: Locale;
 };
 
 /**

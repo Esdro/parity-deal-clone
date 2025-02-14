@@ -8,11 +8,13 @@ import {CHART_INTERVALS} from "@/lib/constants";
 import ViewsByCountryChart from "@/app/[lang]/dashboard/_components/charts/by-country";
 import ViewsByPPPChart from "@/app/[lang]/dashboard/_components/charts/by-ppp";
 import ViewsByDayChart from "@/app/[lang]/dashboard/_components/charts/by-day";
+import {getDictionary} from "../../../../../get-dictionary";
 
 export default async function AnalyticsPage({searchParams,params}) {
     const {interval, timezone, productId} = await searchParams;
     const {lang} = await params;
     const {userId, redirectToSignIn} = await auth();
+
 
     if (!userId) return redirectToSignIn();
 
@@ -22,11 +24,13 @@ export default async function AnalyticsPage({searchParams,params}) {
         interval: CHART_INTERVALS[interval as keyof typeof CHART_INTERVALS] ?? CHART_INTERVALS.last30Days
     };
 
+    const dict = await getDictionary(lang);
+
     const permission = await canAccessAnalytics(userId);
     return (
         <>
+            <HasPermission permission={permission} renderFallback fallbackMessage={dict.dashboard.accessDenied.analyticsReason}>
             <h1 className="text-3xl font-semibold mb-8">Analytics </h1>
-            <HasPermission permission={permission} renderFallback>
                 <div className="flex flex-col gap-8">
                     <ViewsByDayCard {...countryCardProps}/>
                       <ViewsByPPPCard  {...countryCardProps}/>

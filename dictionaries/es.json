@@ -42,7 +42,11 @@
     "ctaButtonText": "Prueba gratis",
     "oneProduct": "Producto",
     "multipleProducts": "Productos",
-    "pppDiscount": "Descuento PPP"
+    "pppDiscount": "Descuento PPP",
+    "downgrade": "Rebajar plan",
+    "upgrade": "Mejorar plan",
+    "manageSubscription": "Administrar su suscripción",
+    "currentPlan": "Plan actual"
   },
   "dashboard": {
     "noProducts": {
@@ -53,7 +57,19 @@
     "accessDenied": {
       "title": "Acceso denegado",
       "bannerReason": "No puede guardar todas sus personalizaciones en el banner hasta que actualice su cuenta.",
+      "analyticsReason": "No puede acceder a las analíticas avanzadas hasta que actualice su cuenta.",
       "ctaButtonText": "Actualizar ahora"
+    },
+    "subscriptionPage": {
+      "title": "Su suscripción",
+      "subtitle": "Administre su suscripción aquí. Puede cambiar su plan, actualizar su información de pago y más.",
+      "ctaButtonText": "Administrar suscripción",
+      "monthly": "Utilización mensual",
+      "numberOfProducts": "Número de productos",
+      "pageVisitThisMonth": "visitas a la página este mes",
+      "productCreated": "Producto creado",
+      "productsCreated": "Productos creados",
+        "currentPlan": "Actualmente está en el plan {plan}"
     }
   }
 }

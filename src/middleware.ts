@@ -1,4 +1,6 @@
 import {clerkMiddleware, createRouteMatcher} from "@clerk/nextjs/server"
+import {NextResponse} from "next/server";
+import {env} from "@/data/env/client";
 /* import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
 
@@ -28,6 +30,11 @@ const isPublicRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, req) => {
     if (!isPublicRoute(req)) {
         await auth.protect()
+    }
+
+    const url = req.nextUrl;
+    if (url.pathname === "/") {
+        return NextResponse.redirect(`${env.NEXT_PUBLIC_SERVER_URL}/${env.NEXT_PUBLIC_DEFAULT_LANGUAGE}`);
     }
 })
 

@@ -17,10 +17,11 @@ import AddProductToSiteDialogContent from "@/app/[lang]/dashboard/_components/Ad
 import {AlertDialog, AlertDialogTrigger} from "@/components/ui/alert-dialog"
 import DeleteProductDialogContent from "@/app/[lang]/dashboard/_components/DeleteProductDialogContent";
 import {auth} from "@clerk/nextjs/server";
+import {Locale} from "../../../../../i18n-config";
 
 type ProductCardProps = {
     product: typeof ProductTable.$inferInsert
-    lang: "en" | "es" | "fr"
+    lang: Locale
 };
 
 /**

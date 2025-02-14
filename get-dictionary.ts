@@ -10,3 +10,6 @@ const dictionaries = {
 export const getDictionary = async (locale: Locale) =>
   dictionaries[locale]()
 
+export const formatDictionnaryText  = (text: string, dictText: string) => {
+    return dictText.replace(/{([^}]+)}/g,text);
+}

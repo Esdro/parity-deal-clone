@@ -42,7 +42,11 @@
     "ctaButtonText": "J'essaie gratuitement",
     "oneProduct": "Produit",
     "multipleProducts": "Produits",
-    "pppDiscount": "Remise PPP"
+    "pppDiscount": "Remise PPP",
+    "downgrade": "Revenir au plan gratuit",
+    "upgrade": "Passer à ce plan",
+    "manageSubscription": "Gérer votre abonnement",
+    "currentPlan": "Plan actuel"
   },
   "dashboard": {
     "noProducts": {
@@ -52,8 +56,20 @@
     },
     "accessDenied": {
       "title": "Accès refusé",
+      "analyticsReason": "Vous ne pouvez pas accéder aux statistiques avancés tant que vous n'avez pas mis à niveau votre compte.",
       "bannerReason": "Vous ne pouvez pas enregistrer toutes vos personnalisations sur la bannière tant que vous n'avez pas mis à niveau votre compte.",
       "ctaButtonText": "Mettre à niveau maintenant"
+    },
+    "subscriptionPage": {
+      "title": "Votre abonnement",
+      "subtitle": "Vous avez un abonnement actif avec nous. Vous pouvez le gérer ici.",
+      "ctaButtonText": "Gérer votre abonnement",
+      "monthly": "Utilisation mensuelle",
+      "numberOfProducts": "Nombre de produits",
+      "pageVisitThisMonth": "visites de la page ce mois-ci.",
+      "productCreated": "Produit créé",
+      "productsCreated": "Produits créés",
+      "currentPlan": "Vous êtes actuellement sur le plan {plan}"
     }
   }
 }
