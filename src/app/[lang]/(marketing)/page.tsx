@@ -1,148 +1,150 @@
-import { Button } from "@/components/ui/button";
-import { SignUpButton } from "@clerk/nextjs";
-import { ArrowRightIcon } from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {SignUpButton} from "@clerk/nextjs";
+import {ArrowRightIcon} from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { NeonIcon } from "./_icons/Neon";
-import { ClerkIcon } from "./_icons/Clerk";
-import { subscriptionTiersInOrder } from "@/data/subscriptionTiers";
+import {NeonIcon} from "./_icons/Neon";
+import {ClerkIcon} from "./_icons/Clerk";
+import {subscriptionTiersInOrder} from "@/data/subscriptionTiers";
 import BrandLogo from "@/components/BrandLogo";
 import {PricingCards} from "@/components/PricingCards";
 import {FooterLinkGroup} from "@/components/FooterLinkGroup";
-import { getDictionary } from '../../../../get-dictionary';
+import {getDictionary} from '../../../../get-dictionary';
 
 async function Home({params}) {
-  
-  const {lang} = await params;
 
-  const dict = await getDictionary(lang as "en" | "fr" | "es");
+    const {lang} = await params;
 
-  if (!dict) {
-    return <div>Language error...</div>;
-  }
-  
-  return (
-    <>
-      <section className="min-h-screen bg-[radial-gradient(hsl(0,72%,65%,40%),hsl(24,62%,73%,40%),hsl(var(--background))_60%)] flex items-center justify-center text-center text-balance flex-col gap-8 px-4">
-        <h1 className="text-6xl lg:text-7xl xl:text-8xl tracking-tighter m-4 font-bold ">
-          {" "}
-          {dict.siteHomePage.heroSection.title} {" "}
-        </h1>
-        <p className="text-lg lg:text-3xl max-w-screen-xl ">
-          {" "}
-            {dict.siteHomePage.heroSection.subtitle} {" "}
-        </p>
+    const dict = await getDictionary(lang as "en" | "fr" | "es");
 
-        <SignUpButton>
-          <Button className="text-lg p-6 rounded-xl flex gap-2">
-           {dict.siteHomePage.heroSection.ctaButtonText} <ArrowRightIcon className="size-5" />
-          </Button>
-        </SignUpButton>
+    if (!dict) {
+        return <div>Language error...</div>;
+    }
 
-        {/* <ClientActionButton text="Rechercher le tweet" action={InvokeTwitter} /> */}
-      </section>
+    return (
+        <>
+            <section
+                className="min-h-screen bg-[radial-gradient(hsl(0,72%,65%,40%),hsl(24,62%,73%,40%),hsl(var(--background))_60%)] flex items-center justify-center text-center text-balance flex-col gap-8 px-4">
+                <h1 className="text-6xl lg:text-7xl xl:text-8xl tracking-tighter m-4 font-bold ">
+                    {" "}
+                    {dict.siteHomePage.heroSection.title} {" "}
+                </h1>
+                <p className="text-lg lg:text-3xl max-w-screen-xl ">
+                    {" "}
+                    {dict.siteHomePage.heroSection.subtitle} {" "}
+                </p>
 
-      <section className="bg-primary text-primary-foreground ">
-        <div className="container py-16 flex flex-col ">
-          <h2 className="text-3xl text-balance text-center ">
-            {" "}
-           {dict.siteHomePage.trustSection.title} {" "}
-          </h2>
+                <SignUpButton>
+                    <Button className="text-lg p-6 rounded-xl flex gap-2">
+                        {dict.siteHomePage.heroSection.ctaButtonText} <ArrowRightIcon className="size-5"/>
+                    </Button>
+                </SignUpButton>
 
-          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16 ">
-            <Link href={"https://neon.tech"}>
-              <NeonIcon />
-            </Link>
-            <Link href={"https://clerk.com"}>
-              <ClerkIcon />
-            </Link>
-            <Link href={"https://neon.tech"}>
-              <NeonIcon />
-            </Link>
-            <Link href={"https://clerk.com"}>
-              <ClerkIcon />
-            </Link>
-            <Link href={"https://neon.tech"}>
-              <NeonIcon />
-            </Link>
-            <Link href={"https://clerk.com"}>
-              <ClerkIcon />
-            </Link>
-            <Link href={"https://neon.tech"}>
-              <NeonIcon />
-            </Link>
-            <Link href={"https://clerk.com"}>
-              <ClerkIcon />
-            </Link>
-            <Link href={"https://neon.tech"}>
-              <NeonIcon />
-            </Link>
-            <Link className="md:max-xl:hidden" href={"https://clerk.com"}>
-              <ClerkIcon />
-            </Link>
-          </div>
-        </div>
-      </section>
+                {/* <ClientActionButton text="Rechercher le tweet" action={InvokeTwitter} /> */}
+            </section>
 
-      <section className="px-8 py-16 bg-accent/5" id="pricing">
-        <h2 className="text-4xl text-center text-balance font-semibold mb-8 ">
-            {dict.siteHomePage.pricingSection.title} {" "}
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-4 max-w-screen-xl mx-auto gap-4 ">
-          {subscriptionTiersInOrder.map((tier) => (
-            <PricingCards key={tier.name} {...tier} lang={lang} />
-          ))}
-        </div>
-      </section>
+            <section id="features" className="bg-primary text-primary-foreground ">
+                <div className="container py-16 flex flex-col ">
+                    <h2 className="text-3xl text-balance text-center ">
+                        {" "}
+                        {dict.siteHomePage.trustSection.title} {" "}
+                    </h2>
 
-      <footer className="flex flex-col sm:flex-row container pt-16 pb-8 sm:gap-4 gap-8 justify-between items-start  ">
-        <Link href={"/"}>
-          <BrandLogo />
-        </Link>
+                    <div className="mt-6 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16 ">
+                        <Link href={"https://neon.tech"}>
+                            <NeonIcon/>
+                        </Link>
+                        <Link href={"https://clerk.com"}>
+                            <ClerkIcon/>
+                        </Link>
+                        <Link href={"https://neon.tech"}>
+                            <NeonIcon/>
+                        </Link>
+                        <Link href={"https://clerk.com"}>
+                            <ClerkIcon/>
+                        </Link>
+                        <Link href={"https://neon.tech"}>
+                            <NeonIcon/>
+                        </Link>
+                        <Link href={"https://clerk.com"}>
+                            <ClerkIcon/>
+                        </Link>
+                        <Link href={"https://neon.tech"}>
+                            <NeonIcon/>
+                        </Link>
+                        <Link href={"https://clerk.com"}>
+                            <ClerkIcon/>
+                        </Link>
+                        <Link href={"https://neon.tech"}>
+                            <NeonIcon/>
+                        </Link>
+                        <Link className="md:max-xl:hidden" href={"https://clerk.com"}>
+                            <ClerkIcon/>
+                        </Link>
+                    </div>
+                </div>
+            </section>
 
-        <div className="flex flex-col items-center  sm:flex-row gap-8  ">
-          <FooterLinkGroup
-            label={dict.footerSection.navigation.products}
-            links={[
-              { label: "Features", href: "/features" },
-              { label: "Integrations", href: "/integrations" },
-              { label: "Pricing", href: "/pricing" },
-              { label: "FAQ", href: "/faq" },
-            ]}
-          />
-          <FooterLinkGroup
-            label={dict.footerSection.navigation.apiAndDocs}
-            links={[
-              { label: "Features", href: "/features" },
-              { label: "Integrations", href: "/integrations" },
-              { label: "Pricing", href: "/pricing" },
-              { label: "FAQ", href: "/faq" },
-            ]}
-          />
-          <FooterLinkGroup
-            label={dict.footerSection.navigation.ressources}
-            links={[
-              { label: "Features", href: "/features" },
-              { label: "Integrations", href: "/integrations" },
-              { label: "Pricing", href: "/pricing" },
-              { label: "FAQ", href: "/faq" },
-            ]}
-          />
-          <FooterLinkGroup
-            label={dict.footerSection.navigation.contact}
-            links={[
-              { label: "Features", href: "/features" },
-              { label: "Integrations", href: "/integrations" },
-              { label: "Pricing", href: "/pricing" },
-              { label: "FAQ", href: "/faq" },
-            ]}
-          />
-        </div>
-      </footer>
-    </>
-  );
+            <section className="px-8 py-16 bg-accent/5" id="pricing">
+                <h2 className="text-4xl text-center text-balance font-semibold mb-8 ">
+                    {dict.siteHomePage.pricingSection.title} {" "}
+                </h2>
+                <div className="grid grid-cols-1 lg:grid-cols-4 max-w-screen-xl mx-auto gap-4 ">
+                    {subscriptionTiersInOrder.map((tier) => (
+                        <PricingCards key={tier.name} {...tier} lang={lang}/>
+                    ))}
+                </div>
+            </section>
+
+            <footer
+                className="flex flex-col sm:flex-row container pt-16 pb-8 sm:gap-4 gap-8 justify-between items-start  ">
+                <Link href={lang as string}>
+                    <BrandLogo/>
+                </Link>
+
+                <div className="flex flex-col items-center  sm:flex-row gap-8  ">
+                    <FooterLinkGroup
+                        label={dict.footerSection.navigation.products}
+                        links={[
+                            {label: dict.footerSection.label.features, href: `${lang}#features`},
+                            {label: dict.footerSection.label.integrations, href: `${lang}#integrations`},
+                            {label: dict.footerSection.label.pricing, href: `${lang}#pricing`},
+                            {label: dict.footerSection.label.faq, href: `${lang}#faq`},
+                        ]}
+                    />
+                    <FooterLinkGroup
+                        label={dict.footerSection.navigation.apiAndDocs}
+                        links={[
+                            {label: dict.footerSection.label.features, href: `${lang}#features`},
+                            {label: dict.footerSection.label.integrations, href: `${lang}#integrations`},
+                            {label: dict.footerSection.label.pricing, href: `${lang}#pricing`},
+                            {label: dict.footerSection.label.faq, href: `${lang}#faq`},
+                        ]}
+                    />
+                    <FooterLinkGroup
+                        label={dict.footerSection.navigation.ressources}
+                        links={[
+                            {label: dict.footerSection.label.features, href: `${lang}#features`},
+                            {label: dict.footerSection.label.integrations, href: `${lang}#integrations`},
+                            {label: dict.footerSection.label.pricing, href: `${lang}#pricing`},
+                            {label: dict.footerSection.label.faq, href: `${lang}#faq`},
+                        ]}
+                    />
+                    <FooterLinkGroup
+                        label={dict.footerSection.navigation.contact}
+                        links={[
+                            {label: dict.footerSection.label.features, href: `${lang}#features`},
+                            {label: dict.footerSection.label.integrations, href: `${lang}#integrations`},
+                            {label: dict.footerSection.label.pricing, href: `${lang}#pricing`},
+                            {label: dict.footerSection.label.faq, href: `${lang}#faq`},
+                        ]}
+                    />
+
+                </div>
+            </footer>
+        </>
+    );
 }
-
 
 
 export default Home;

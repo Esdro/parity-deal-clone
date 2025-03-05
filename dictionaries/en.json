@@ -31,6 +31,12 @@
       "apiAndDocs": "Api & Docs",
       "ressources": "Ressources",
       "contact": "Contact"
+    },
+    "label": {
+      "features": "Features",
+      "integrations": "Integrations",
+      "pricing": "Pricing",
+      "faq": "FAQ"
     }
   },
   "pricingCard": {

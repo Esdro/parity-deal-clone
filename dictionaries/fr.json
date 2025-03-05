@@ -31,6 +31,12 @@
       "apiAndDocs": "Pour les développeurs",
       "ressources": "Ressources",
       "contact": "Contactez-nous"
+    },
+    "label": {
+      "features": "Fonctionnalités",
+      "integrations": "Intégrations",
+      "pricing": "Tarifs",
+      "faq": "FAQ"
     }
   },
   "pricingCard": {

@@ -26,7 +26,7 @@ export default function ViewsByDayChart({chartData}: ViewsByDayChartProps) {
         }
     } satisfies ChartConfig;
 
-    console.log(chartData);
+   // console.log(chartData);
     const data = chartData.map((item) => {
         return {
             ...item,
