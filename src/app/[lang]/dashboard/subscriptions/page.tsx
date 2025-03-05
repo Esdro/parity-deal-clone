@@ -40,14 +40,14 @@ async function SubscriptionPage({params}) {
                 <div className='grid grid-cols-1  md:grid-cols-2 gap-8 '>
                     <Card>
                         <CardHeader>
-                            <CardTitle className='text-lg'> {dict.dashboard.subscriptionPage.monthly} </CardTitle>
+                            <CardTitle className='text-lg' > {dict.dashboard.subscriptionPage.monthly} </CardTitle>
                             <CardDescription>
                                 {formatCompactNumber(pricingViewCount)} / {" "}
                                 {formatCompactNumber(tier.maxNumberOfVisits)} {dict.dashboard.subscriptionPage.pageVisitThisMonth}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <Progress value={(pricingViewCount / tier.maxNumberOfVisits) * 100}
+                            <Progress aria-label="Tier progressbar" value={(pricingViewCount / tier.maxNumberOfVisits) * 100}
                                       max={tier.maxNumberOfVisits}/>
                         </CardContent>
                     </Card>
@@ -60,7 +60,7 @@ async function SubscriptionPage({params}) {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <Progress value={(productCount / tier.maxNumberOfProducts) * 100}
+                            <Progress aria-label="Product created progressbar" value={(productCount / tier.maxNumberOfProducts) * 100}
                                       max={tier.maxNumberOfProducts}/>
                         </CardContent>
                     </Card>
