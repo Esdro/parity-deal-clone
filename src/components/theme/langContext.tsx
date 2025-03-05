@@ -1,5 +1,5 @@
 "use client";
-import { createContext,  useContext, useEffect, useState } from "react"
+import { createContext,  useContext, useState } from "react"
 
 interface LangContextType  {
     lang: "fr" | "en" | "es";
@@ -9,7 +9,7 @@ interface LangContextType  {
 
 export const LangContext = createContext<LangContextType>({
     lang: 'fr',
-    toggleLang: (lang: LangContextType['lang']) => {}
+    toggleLang: () => {}
 })
 
 
