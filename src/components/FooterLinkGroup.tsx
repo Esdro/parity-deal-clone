@@ -12,7 +12,7 @@ export function FooterLinkGroup({ label, links }: FooterLinkGroupProps) {
             <h3 className="text-xl font-bold"> {label} </h3>
             <ul className="flex flex-col gap-2 text-md">
                 {links.map(({ label, href }) => (
-                    <Link key={label} href={href}> {label} </Link>
+                   <li key={label} data-value={label!}>  <Link href={href}> {label} </Link> </li>
                 ))}
             </ul>
         </div>
